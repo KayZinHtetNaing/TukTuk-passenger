@@ -43,9 +43,8 @@ export default function InputPhScreen() {
 
     
         const messageLines = [
-          'Line 1 of the message',
-          'Line 2 of the message',
-          'Line 3 of the message',
+          'Logi Successful',
+         
         ];
         
         Alert.alert(
