@@ -1,5 +1,5 @@
-import { View, Text,TouchableOpacity,Image } from 'react-native'
-import React from 'react'
+import { View, Text,TouchableOpacity,Image , Alert} from 'react-native'
+import React, { useState } from 'react'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import tw from 'twrnc';
@@ -11,6 +11,43 @@ const tukLogo=require("../assets/images/login.png")
 
 export default function LoginScreen() {
   const navigation = useNavigation();
+  const HomeScreen = () => {navigation.navigate("Home")};
+
+  const [fdata, setFdata] = useState({
+    
+    phnumber:"",
+    password:"",
+  });
+
+
+
+
+  const [errorMessage , setErrorMessage] =useState(null);
+  const sendtoBackend = () => {
+    if (fdata.phnumber === "" || fdata.password === "") {
+      setErrorMessage("All fields are required");
+      return;
+    } else{
+
+      const messageLines = [
+        'Login Successful',
+       
+      ];
+      Alert.alert(
+        'Login',
+        messageLines.join('\n'), // Concatenate array elements into a single string
+        [
+          {
+            text: 'Ok',
+            onPress: HomeScreen,
+          }
+        ]
+      );
+    }
+  };
+  
+
+
   return (
    
     <View style={tw`flex-1 bg-orange-400`}>
@@ -26,15 +63,33 @@ export default function LoginScreen() {
         </View>
     </SafeAreaView>
     <View style={tw`flex-1 px-8 pt-8 mt-30 bg-white rounded-t-10`}>
+
+    {
+        errorMessage ? <Text style={tw`ml-20   text-red-600`} class>{errorMessage}</Text> : null
+      }
         <View style={tw`form space-y-2`}>
             <Text style={tw`text-gray-700 ml-4 mb-3`}>Phone number</Text>
 
-            <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`} value="" placeholder="Enter Your Phone number"/>
+            <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`} 
+             placeholder="Enter Your Phone number"
+            onChangeText={(text) => setFdata({...fdata, phnumber:text}) }
+
+
+             />
 
             <Text style={tw`text-gray-700 ml-4 mb-3`}>Password</Text>
-            <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-10`} secureTextEntry value="" placeholder="Enter Your Password"/>
+            <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-10`} secureTextEntry 
+            placeholder="Enter Your Password"
+            onChangeText={(text) => setFdata({...fdata, password:text}) }
+
+            />
             
-            <TouchableOpacity style={tw`py-3 rounded-full bg-orange-400`} onPress={() =>navigation.navigate("Home")}>
+            <TouchableOpacity style={tw`py-3 rounded-full bg-orange-400`} 
+            onPress= {() => {
+              sendtoBackend();
+            }}
+            
+            >
               <Text style={tw`font-xl font-bold text-center text-white text-base`}>Login to Your Account</Text>
             </TouchableOpacity>
         </View>

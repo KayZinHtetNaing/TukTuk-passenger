@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image ,Alert} from "react-native";
 import React,{useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-//  import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { TextInput } from "react-native";
@@ -9,7 +9,9 @@ import { TextInput } from "react-native";
 const tukLogo = require("../assets/images/signup.png");
 
 export default function SignupScreen() {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
+  const HomeScreen = () => {navigation.navigate("Home")};
+
  
     // animation: 'myAnim 2s ease 0s 1 normal forwards',
 
@@ -35,18 +37,33 @@ export default function SignupScreen() {
       return;
     }
     else {
-      fetch('http://localhost:3000/passengers', {
-        method: 'POST',
-        headers: { 
-          'Content-type': 'application/json' 
-        },
-        body: JSON.stringify(fdata)
-      })
-      .then (res => res.json()).then(
-        data => {
-          console.log(data);
-        }
-      )
+      // fetch('http://localhost:3000/passengers', {
+      //   method: 'POST',
+      //   headers: { 
+      //     'Content-type': 'application/json' 
+      //   },
+      //   body: JSON.stringify(fdata)
+      // })
+      // .then (res => res.json()).then(
+      //   data => {
+      //     console.log(data);
+      //   }
+      // )
+
+      const messageLines = [
+        'Create Account successful',
+       
+      ];
+      Alert.alert(
+        'Create account',
+        messageLines.join('\n'), // Concatenate array elements into a single string
+        [
+          {
+            text: 'Ok',
+            onPress: HomeScreen,
+          }
+        ]
+      );
     }
   }
 
