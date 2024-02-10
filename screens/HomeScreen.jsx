@@ -17,6 +17,8 @@ import About from './About';
 import Rateus from './Rateus';
 import Helpcenter from "./Helpcenter";
 import Privacypolicy from './Privacypolicy';
+import Notification from "./Notification";
+
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -77,6 +79,18 @@ function HomeScreen() {
           ),
        }}
     />
+
+    <Drawer.Screen
+    name="Notification"
+    component={Notification}
+    options={{ drawerLabel: 'Notification',
+    title: "Notification",
+        drawerIcon: () => (
+          <Ionicons name="notifications" size={20} color="black" />
+        ),
+     }}
+  />
+
     <Drawer.Screen
       name="Profile"
       component={Profile}

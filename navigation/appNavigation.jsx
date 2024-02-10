@@ -9,6 +9,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import InputPhScreen from '../screens/InputPhScreen';
 import OtpNoScreen from '../screens/OtpNoScreen';
+import Notification from '../screens/Notification';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function AppNavigation() {
     return ( <NavigationContainer>
         <Stack.Navigator initialRouteName = 'Welcome'>
           <Stack.Screen name = "Home" options = {{ headerShown: false }} component = {HomeScreen}/> 
+          <Stack.Screen name = "Notification" options = {{ headerShown: false }} component = {Notification}/> 
           <Stack.Screen name = "Welcome" options = {{ headerShown: false }} component = { WelcomeScreen }/> 
           <Stack.Screen name = "Login" options = { { headerShown: false }} component = { LoginScreen }/> 
         <Stack.Screen name = "SignUp" options = {{ headerShown: false }} component = { SignUpScreen }/> 
