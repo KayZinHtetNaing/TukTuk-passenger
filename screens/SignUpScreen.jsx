@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { TextInput } from "react-native";
+import axios from "axios";
 
 const tukLogo = require("../assets/images/signup.png");
 
@@ -12,7 +13,9 @@ export default function SignupScreen() {
   const navigation = useNavigation();
   const HomeScreen = () => {navigation.navigate("Home")};
 
- 
+ const setcreateAcc= async(fdata)=>{
+  const {data} = await axios.post("localhost:3000/passengers",fdata)
+ }
     // animation: 'myAnim 2s ease 0s 1 normal forwards',
 
   
@@ -49,7 +52,7 @@ export default function SignupScreen() {
       //     console.log(data);
       //   }
       // )
-
+        setcreateAcc(fdata)
       const messageLines = [
         'Create Account successful',
        
