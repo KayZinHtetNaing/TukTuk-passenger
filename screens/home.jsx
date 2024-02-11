@@ -4,6 +4,12 @@ import MapView from 'react-native-maps';
 import tw from 'twrnc';
 import { TextInput,underlineColorAndroid } from "react-native";
 import ModalPicker from "./ModalPicker";
+
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const latitudeDelta =0.025;
 const longitudeDelta=0.025;
 
@@ -35,6 +41,7 @@ export default function HomeScreen() {
     setchooseData(option)
   }
     return ( 
+      <ScrollView>
         <View style={{flex:1}}>
             <MapView
               style={{width:"100%",height:200}}
@@ -46,7 +53,7 @@ export default function HomeScreen() {
 
 
            
-           <ScrollView>
+        
            
            <View style={tw`form space-y-2`}>
            <Text style={tw`text-gray-700 ml-4 mb-1`}>Name</Text>
@@ -106,7 +113,7 @@ export default function HomeScreen() {
       
 
            <TouchableOpacity
-             style={tw`py-3 rounded-full bg-orange-400`}
+             style={tw`py-3 rounded-full bg-orange-400 mb-5`}
              onPress={() => navigation.navigate("InputPh")}
            >
              <Text
@@ -123,7 +130,7 @@ export default function HomeScreen() {
          </View>
 
            
-           </ScrollView>
+         
             
             {/* <View style={tw`flex-row justify-center mt-5`}>
               <Text style={tw`font-semibold text-grey-700`}>
@@ -140,6 +147,7 @@ export default function HomeScreen() {
          
 
         </View>
+        </ScrollView>
     );
 }
 

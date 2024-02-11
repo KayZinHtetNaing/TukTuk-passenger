@@ -11,6 +11,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {NavigatonContainer} from '@react-navigation/native';
 import home from './home';
+import PassengerHome from "./PassengerHome";
 import Profile from './Profile';
 import Setting from './Setting';
 import About from './About';
@@ -30,7 +31,7 @@ const tukLogo=require("../assets/images/p10.png")
 const Drawer = createDrawerNavigator();
 function HomeScreen() {
   return ( 
-    <Drawer.Navigator initialRouteName="home"
+    <Drawer.Navigator initialRouteName="Home"
     screenOptions={{
       drawerStyle:{
         backgroundColor: "#FFF",
@@ -71,7 +72,7 @@ function HomeScreen() {
 
     <Drawer.Screen
       name="home"
-      component={home}
+      component={PassengerHome}
       options={{ drawerLabel: 'Home',
       title: "Home",
           drawerIcon: () => (
@@ -80,16 +81,7 @@ function HomeScreen() {
        }}
     />
 
-    <Drawer.Screen
-    name="Notification"
-    component={Notification}
-    options={{ drawerLabel: 'Notification',
-    title: "Notification",
-        drawerIcon: () => (
-          <Ionicons name="notifications" size={20} color="black" />
-        ),
-     }}
-  />
+
 
     <Drawer.Screen
       name="Profile"
