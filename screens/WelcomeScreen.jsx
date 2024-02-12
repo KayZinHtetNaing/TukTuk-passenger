@@ -95,7 +95,7 @@ export default function WelcomeScreen() {
                   </View>
 
                   <View>
-                    <TouchableOpacity style={tw`bg-orange-500 bg-opacity-100 mx-7 my-10 w-50 rounded-xl py-3 max-w-sm text-center font-bold `} onPress = {() => navigation.navigate('Login')}>
+                    <TouchableOpacity style={tw`bg-orange-500 bg-opacity-100 mx-7 my-10 w-50 rounded-xl py-3 max-w-sm text-center font-bold `} onPress = {() => navigation.navigate('Home')}>
                     <Text style={tw`text-center`}>Let's Get Started</Text></TouchableOpacity>
                    
 

@@ -26,7 +26,7 @@ import {
 } from '@react-navigation/drawer';
 //import { Image } from "react-native-svg";
 import tw from 'twrnc';
-const tukLogo=require("../assets/images/p10.png")
+const tukLogo=require("../assets/p3.png")
 
 const Drawer = createDrawerNavigator();
 function HomeScreen() {
@@ -60,7 +60,7 @@ function HomeScreen() {
               borderBottomWidth:1,
               paddingBottom:12
             }}>
-              <Image source={tukLogo} resizeMode="contain" style={{height:130,width:130,borderRadius:70,borderColor:"orange",borderWidth:4}}></Image>
+              <Image source={tukLogo} resizeMode="contain" style={{height:100,width:100,borderRadius:70,borderColor:"gray",borderWidth:4}}></Image>
               <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>Ma Phyu Pwint</Text>
             </View>
             <DrawerItemList {...props} />
@@ -99,17 +99,17 @@ function HomeScreen() {
       options={{ drawerLabel: 'Setting',
       title: "Setting",
           drawerIcon: () => (
-            <Ionicons name="settings" size={20} color="black" />
+            <Ionicons name="settings-outline" size={20} color="black" />
           ),
        }}
     />
     <Drawer.Screen
       name="About"
       component={About}
-      options={{  drawerLabel: "About",
-          title: "About",
+      options={{  drawerLabel: "App Guide",
+          title: "App Guide",
           drawerIcon: () => (
-            <Ionicons name="ios-information-circle-outline" size={20} color="black" />
+            <Ionicons name="compass-outline" size={20} color="black" />
            
           ),
        }}
@@ -117,10 +117,10 @@ function HomeScreen() {
      <Drawer.Screen
       name="Rateus"
       component={Rateus}
-      options={{  drawerLabel: "Rateus",
-          title: "Rateus",
+      options={{  drawerLabel: "Feedback",
+          title: "Feedback",
           drawerIcon: () => (
-            <Ionicons name="star-outline" size={20} color="black" />
+            <Ionicons name="send-outline" size={20} color="black" />
            
           ),
        }}
