@@ -14,7 +14,7 @@ export default function LoginScreen() {
   const [contact, setContact] = useState([]);
   const getContact = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/passengers");
+      const response = await axios.get("http://192.168.1.209:3000/passengers");
       console.log(response.data.data); // Log the fetched data
       setContact(response.data.data);
     } catch (error) {
