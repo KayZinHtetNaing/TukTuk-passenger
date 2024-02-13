@@ -29,7 +29,8 @@ import tw from 'twrnc';
 const tukLogo=require("../assets/p3.png")
 
 const Drawer = createDrawerNavigator();
-function HomeScreen() {
+function HomeScreen({route}) {
+  const{message} = route.params;
   return ( 
     <Drawer.Navigator initialRouteName="Home"
     screenOptions={{
@@ -61,7 +62,8 @@ function HomeScreen() {
               paddingBottom:12
             }}>
               <Image source={tukLogo} resizeMode="contain" style={{height:100,width:100,borderRadius:70,borderColor:"gray",borderWidth:4}}></Image>
-              <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>Ma Phyu Pwint</Text>
+              <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.name}</Text>
+              <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.phnumber}</Text>
             </View>
             <DrawerItemList {...props} />
            </SafeAreaView>

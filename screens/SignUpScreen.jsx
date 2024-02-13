@@ -2,71 +2,70 @@ import { View, Text, TouchableOpacity, Image ,Alert} from "react-native";
 import React,{useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import tw from "twrnc";
+import tw, { create } from "twrnc";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { TextInput } from "react-native";
 import axios from "axios";
 
 const tukLogo = require("../assets/images/signup.png");
 
-export default function SignupScreen() {
+export default function SignupScreen({route}) {
+  const{message} = route.params;
+  // console.log(message);
   const navigation = useNavigation();
   const HomeScreen = () => {navigation.navigate("Home")};
 
- const setcreateAcc= async(fdata)=>{
-  const {data} = await axios.post("localhost:3000/passengers",fdata)
- }
-    // animation: 'myAnim 2s ease 0s 1 normal forwards',
 
+  const [name , setName] = useState('');
+  const [phnumber , setphoneNumber] = useState(message);
+  const [password , setPassword] = useState('');
+  const [cpassword , setcPassword] = useState('');
+
+ 
+    // animation: 'myAnim 2s ease 0s 1 normal forwards',
+const createAccount = async(contact) => {
+  const {data} = await axios.post("http://localhost:3000/passengers",contact)
+}
   
-  const [fdata , setFdata] = useState({
-    name:"",
-    password:"",
-    cpassword:"",
-  });
+  
 
   const [errorMessage , setErrorMessage] =useState(null);
   const sendtoBackend = () => {
     // console.log(fdata);
-    if(fdata.name == "" ||
-    fdata.password =="" ||
-    fdata.cpassword =="") 
+    if(name == "" ||
+    
+    password =="" ||
+    cpassword =="") 
     {
       setErrorMessage("All fields are required");
       return;
     }
-    else if(fdata.password != fdata.cpassword){
+    else if(password != cpassword){
       setErrorMessage("Password and Confirm Password must be same");
       return;
     }
     else {
-      // fetch('http://localhost:3000/passengers', {
-      //   method: 'POST',
-      //   headers: { 
-      //     'Content-type': 'application/json' 
-      //   },
-      //   body: JSON.stringify(fdata)
-      // })
-      // .then (res => res.json()).then(
-      //   data => {
-      //     console.log(data);
-      //   }
-      // )
-        setcreateAcc(fdata)
-      const messageLines = [
-        'Create Account successful',
+      
+    console.log(name , phnumber , password ,cpassword);
+    const contact ={name, phnumber,password,cpassword};
+      // const messageLines = [
+      //   'Create Account successful',
        
-      ];
-      Alert.alert(
-        'Create account',
-        messageLines.join('\n'), // Concatenate array elements into a single string
-        [
-          {
-            text: 'Ok',
-            onPress: HomeScreen,
-          }
-        ]
-      );
+      // ];
+      // Alert.alert(
+      //   'Create account',
+      //   messageLines.join('\n'), // Concatenate array elements into a single string
+      //   [
+      //     {
+      //       text: 'Ok',
+      //       onPress: HomeScreen,
+      //     }
+      //   ]
+      // );
+      navigation.navigate("Home",{message:contact});
+
+      createAccount(contact);
+
     }
   }
 
@@ -98,7 +97,22 @@ export default function SignupScreen() {
             style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
             
             placeholder="Enter Your Name"
-            onChangeText={(text) => setFdata({...fdata, name:text}) }
+            onChange={(e) => {
+                  setName(e.target.value);
+                }}
+            // onChangeText={(text) => setFdata({...fdata, name:text}) }
+          />
+           <Text style={tw`text-gray-700 ml-4 mb-3`}>Phone Number</Text>
+          <TextInput
+            style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
+            
+            // placeholder="Enter Your Phone Number"
+            editable={false}
+            value={message}
+            onChange={(e) => {
+                  setphoneNumber(e.target.value);
+                }}
+            // onChangeText={(text) => setFdata({...fdata, name:text}) }
           />
 
           <Text style={tw`text-gray-700 ml-4 mb-3`}>Password</Text>
@@ -107,7 +121,10 @@ export default function SignupScreen() {
             secureTextEntry
           
             placeholder="Enter Your Password"
-            onChangeText={(text) => setFdata({...fdata , password: text})}
+            onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+            // onChangeText={(text) => setFdata({...fdata , password: text})}
           />
 
           <Text style={tw`text-gray-700 ml-4 mb-3`}>Confirm Password</Text>
@@ -116,7 +133,10 @@ export default function SignupScreen() {
             secureTextEntry
             
             placeholder="Enter Your Confirm Password"
-            onChangeText = {(text) => setFdata({...fdata, cpassword: text})}
+            onChange={(e) => {
+                  setcPassword(e.target.value);
+                }}
+            // onChangeText = {(text) => setFdata({...fdata, cpassword: text})}
           />
 
           <TouchableOpacity
