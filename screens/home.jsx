@@ -1,138 +1,205 @@
-import { View, Text,TouchableOpacity, Modal,Image,StyleSheet,Title,ScrollView } from "react-native";
-import React,{useState} from 'react'
-import MapView from 'react-native-maps';
-import tw from 'twrnc';
-import { TextInput,underlineColorAndroid } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Image,
+  StyleSheet,
+  Title,
+  ScrollView,
+  Alert
+} from "react-native";
+import React, { useState } from "react";
+import MapView from "react-native-maps";
+import tw from "twrnc";
+import axios from "axios";
+import { TextInput, underlineColorAndroid } from "react-native";
 import ModalPicker from "./ModalPicker";
 
-import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-const latitudeDelta =0.025;
-const longitudeDelta=0.025;
+const latitudeDelta = 0.025;
+const longitudeDelta = 0.025;
 
 export default function HomeScreen() {
+const [name, setName] = useState('') ;
+const [phoneNumber,setPhone] = useState('') ;
+const [from , setFrom] = useState('');
+const [to ,setTo] = useState('');
+const [NOcar, setCar] =useState ('');
 
-  map={
-    region :{
-      latitudeDelta,
-      longitudeDelta,
-      latitude:18.818752452008397,
-      longitude:95.220778226511,
+const createLocation = async (contact) => {
+  try {
+    const { data } = await axios.post(
+      "http://192.168.1.198:3000/map_location",
+      contact
+    );
+    console.log("Response from server:", data);
+  } catch (error) {
+    console.error("Error while sending data:", error);
+    if (error.response) {
+      console.error("Response data:", error.response.data);
     }
   }
-
-//   onChangeValue = region =>{
-// alert(JSON.stringify(region))
-//     this.setState({
-//       region
-//     })
-//   }
-  const [chooseData,setchooseData]=useState('Select Number of car...');
-  const [isModalVisible,setisModalVisible]=useState(false);
-
-  const changeModalVisibility=(bool)=>{
-
-    setisModalVisible(bool)
-  }
-  const setData=(option)=>{
-    setchooseData(option)
-  }
-    return ( 
-      <ScrollView>
-        <View style={{flex:1}}>
-            <MapView
-              style={{width:"100%",height:200}}
-              initialRegion={this.map.region}
-            />
-
-            
-            <View style={tw`flex-1 px-8 pt-8 bg-white`}>
+};
 
 
-           
-        
-           
-           <View style={tw`form space-y-2`}>
-           <Text style={tw`text-gray-700 ml-4 mb-1`}>Name</Text>
-           <TextInput
-             style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-             // underlineColorAndroid={tw`text-orange-400`}
-             value=""
-             placeholder="Enter Your Name"
-           />
- 
-           <Text style={tw`text-gray-700 ml-4 mb-1`}>Phone Number</Text>
-           <TextInput
-             style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-             secureTextEntry
-             value=""
-             placeholder="Enter Your Phone number"
-           />
-
-           <Text style={tw`text-gray-700 ml-4 mb-1`}>From</Text>
-           <TextInput
-             style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-             secureTextEntry
-             value=""
-             placeholder="Entery Your Location"
-           />
-
-           <Text style={tw`text-gray-700 ml-4 mb-1`}>To</Text>
-           <TextInput
-             style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-             secureTextEntry
-             value=""
-             placeholder="Enter Location where You wanna Go"
-           />
- 
-           <Text style={tw`text-gray-700 ml-4 mb-1`}>Numbers of Car</Text>
-        <TouchableOpacity 
-        onPress={()=> changeModalVisibility(true)} 
-        style={styles.touchableOpacity} style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-3`}>
-        <Text style={tw`text-gray-700`}>{chooseData}</Text>
-        </TouchableOpacity>
-       <Modal
-         transparent={true}
-         animationType="fade"
-         visible={isModalVisible}
-         nRequestClose={()=>changeModalVisibility(false)}
-       >
-       
-       <ModalPicker 
-       changeModalVisibility={changeModalVisibility}
-       setData={setData}
-       />
-
-       </Modal>
-  
+const [errorMessage , setErrorMessage] =useState(null);
+  const sendtoBackend = () => {
+    
+    if(!name || !phoneNumber || !from || !to || !NOcar) 
+    {
+      setErrorMessage("All fields are required");
+      return;
+    }
    
-     
+    else {
       
+    console.log(name , phoneNumber , from , to, NOcar);
+    const contact ={name, phoneNumber, from , to , NOcar};
+     
+    
+      createLocation(contact);
+      setName('')
+      setPhone('')
+      setFrom('')
+      setTo('')
+      setCar('')
+      Alert.alert("Successfully send");
 
-           <TouchableOpacity
-             style={tw`py-3 rounded-full bg-orange-400 mb-5`}
-             onPress={() => navigation.navigate("InputPh")}
-           >
-             <Text
-               style={tw`font-xl font-bold text-center text-white text-base`}
-             >
-               Go
-             </Text>
-           </TouchableOpacity>
+     
+
+    }
+
+    
+  }
 
 
-           
-          
 
-         </View>
+  map = {
+    region: {
+      latitudeDelta,
+      longitudeDelta,
+      latitude: 18.818752452008397,
+      longitude: 95.220778226511,
+    },
+  };
 
-           
-         
-            
-            {/* <View style={tw`flex-row justify-center mt-5`}>
+  //   onChangeValue = region =>{
+  // alert(JSON.stringify(region))
+  //     this.setState({
+  //       region
+  //     })
+  //   }
+  const [chooseData, setchooseData] = useState("Select Number of car...");
+  const [isModalVisible, setisModalVisible] = useState(false);
+
+  const changeModalVisibility = (bool) => {
+    setisModalVisible(bool);
+  };
+  const setData = (option) => {
+    setchooseData(option);
+  };
+  return (
+    <ScrollView>
+      <View style={{ flex: 1 }}>
+        <MapView
+          style={{ width: "100%", height: 300 }}
+          initialRegion={this.map.region}
+        />
+
+        <View style={tw`flex-1 px-8 pt-8 bg-white`}>
+          <View style={tw`form space-y-2`}>
+            <Text style={tw`text-gray-700 ml-4 mb-1`}>Name</Text>
+            <TextInput
+  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+  placeholder="Enter Your Name"
+  onChangeText={(text) => setName(text)}
+  value={name}
+/>
+<Text style={tw`text-gray-700 ml-4 mb-1`}>Phone Number</Text>
+
+<TextInput
+  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+  placeholder="Enter Your Phone number"
+  keyboardType = 'numeric'
+  onChangeText={(text) => setPhone(text)}
+  value={phoneNumber}
+/>
+
+<Text style={tw`text-gray-700 ml-4 mb-1`}>From</Text>
+
+<TextInput
+  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+  placeholder="Entery Your Location"
+  onChangeText={(text) => setFrom(text)}
+  value={from}
+/>
+
+<Text style={tw`text-gray-700 ml-4 mb-1`}>To</Text>
+
+<TextInput
+  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+  placeholder="Enter Location where You wanna Go"
+  onChangeText={(text) => setTo(text)}
+  value={to}
+/>
+
+<Text style={tw`text-gray-700 ml-4 mb-1`}>Number of Tuk-Tuk</Text>
+
+<TextInput
+  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+  placeholder="Enter number of Tuk-Tuk what you want"
+  keyboardType = 'numeric'
+  onChangeText={(text) => setCar(text)}
+  value={NOcar}
+/>
+
+
+
+            {/* <Text style={tw`text-gray-700 ml-4 mb-1`}>Numbers of Car</Text>
+            <TouchableOpacity
+              onPress={() => changeModalVisibility(true)}
+              style={[
+                styles.touchableOpacity,
+                tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-3`,
+              ]}
+              onChange={(e) => {
+                  setCar(e.nativeEvent.text);
+                  console.log(e.nativeEvent.text);
+                }}
+            >
+              <Text style={tw`text-gray-700`}>{chooseData}</Text>
+            </TouchableOpacity> */}
+
+            <Modal
+              transparent={true}
+              animationType="fade"
+              visible={isModalVisible}
+              nRequestClose={() => changeModalVisibility(false)}
+            >
+              <ModalPicker
+                changeModalVisibility={changeModalVisibility}
+                setData={setData}
+              />
+            </Modal>
+
+            <TouchableOpacity
+              style={tw`py-3 rounded-full bg-orange-400 mb-5`}
+              onPress={() => {sendtoBackend()}}
+            >
+              <Text
+                style={tw`font-xl font-bold text-center text-white text-base`}
+              >
+                Go
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* <View style={tw`flex-row justify-center mt-5`}>
               <Text style={tw`font-semibold text-grey-700`}>
                 Already have an account?
               </Text>
@@ -143,30 +210,26 @@ export default function HomeScreen() {
                 Login
               </TouchableOpacity>
             </View> */}
-          </View>
-         
-
         </View>
-        </ScrollView>
-    );
+      </View>
+    </ScrollView>
+  );
 }
 
-const styles=StyleSheet.create({
-
+const styles = StyleSheet.create({
   // text:{
   //   marginVertical:20,
   //   fontSize:15,
   // },
   // touchableOpacity:{
   // }
-})
+});
 
-
- //  <ModalPicker 
-            //  changeModalVisibility={changeModalVisibility}
-            //  setData={setData}
-            //  />
-// <MapView 
+//  <ModalPicker
+//  changeModalVisibility={changeModalVisibility}
+//  setData={setData}
+//  />
+// <MapView
 // style={{flex:1}}
 // initialRegion={this.state.region}
 // onRegionChangeComplete={this.onChangeValue}
@@ -255,10 +318,10 @@ const styles=StyleSheet.create({
 //       // set(position);
 //       // moveTo(position);
 //   // };
-//     return ( 
+//     return (
 //         <View style={styles.container}>
 //          <MapView
-      
+
 //         style={styles.map}
 //         provider={PROVIDER_GOOGLE}
 //         initialRegion={INITIAL_POSITION}
@@ -291,7 +354,7 @@ const styles=StyleSheet.create({
 //         />
 //         </View>
 //       </View>
-      
+
 //     )
 // }
 
@@ -320,7 +383,7 @@ const styles=StyleSheet.create({
 //       top:Constants.statusBarHeight,
 //     },
 //     input:{
-//      borderColor:"grey", 
+//      borderColor:"grey",
 //      borderWidth:1,
 //      margin:4,
 //     }

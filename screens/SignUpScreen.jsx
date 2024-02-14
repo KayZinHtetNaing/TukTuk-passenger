@@ -24,7 +24,7 @@ export default function SignupScreen({route}) {
  
     // animation: 'myAnim 2s ease 0s 1 normal forwards',
 const createAccount = async(contact) => {
-  const {data} = await axios.post("http://192.168.1.209:3000/passengers",contact)
+  const {data} = await axios.post("http://192.168.1.198:3000/passengers",contact)
 }
   
   
@@ -48,20 +48,7 @@ const createAccount = async(contact) => {
       
     console.log(name , phnumber , password ,cpassword);
     const contact ={name, phnumber,password,cpassword};
-      // const messageLines = [
-      //   'Create Account successful',
-       
-      // ];
-      // Alert.alert(
-      //   'Create account',
-      //   messageLines.join('\n'), // Concatenate array elements into a single string
-      //   [
-      //     {
-      //       text: 'Ok',
-      //       onPress: HomeScreen,
-      //     }
-      //   ]
-      // );
+     
       navigation.navigate("Home",{message:contact});
 
       createAccount(contact);
