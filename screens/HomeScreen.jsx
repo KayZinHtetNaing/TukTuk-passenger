@@ -1,7 +1,7 @@
 //import 'react-native-gesture-handler';
 // import MapView from 'react-native-maps';
 import { StyleSheet,View, Text,Image } from "react-native";
-import React from "react";
+import React,{useState,useContext,useEffect} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -9,7 +9,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {NavigatonContainer} from '@react-navigation/native';
+import {NavigatonContainer,DarkTheme,DefaultTheme} from '@react-navigation/native';
 import home from './home';
 import PassengerHome from "./PassengerHome";
 import Profile from './Profile';
@@ -19,7 +19,9 @@ import Rateus from './Rateus';
 import Helpcenter from "./Helpcenter";
 import Privacypolicy from './Privacypolicy';
 import Notification from "./Notification";
-
+import theme from "../theme/theme";
+import themeContext from "../theme/themeContext";
+import { EventRegister } from 'react-native-event-listeners'
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -30,9 +32,26 @@ const tukLogo=require("../assets/p3.png")
 
 const Drawer = createDrawerNavigator();
 function HomeScreen({route}) {
+
+  // const theme=useContext(themeContext)
+
+  const [darkMode,setDarkMode]=useState(false)
+
+  useEffect(()=>{
+    const listener=EventRegister.addEventListener('ChangeTheme',(data)=>{
+      setDarkMode(data)
+      // console.log(data)
+    })
+    return ()=>{
+
+    EventRegister.removeAllListeners(listener)
+    }
+  },[darkMode])
+
+
   const{message} = route.params;
   return ( 
-    <Drawer.Navigator initialRouteName="Home"
+    <Drawer.Navigator initialRouteName="Home" theme={darkMode === true? DarkTheme : DefaultTheme}
     screenOptions={{
       drawerStyle:{
         backgroundColor: "#FFF",
@@ -52,7 +71,7 @@ function HomeScreen({route}) {
       (props)=>{
         return(
            <SafeAreaView>
-            <View style={{
+            <View style={[{
               height:200,
               width:"100%",
               justifyContent:"center",
@@ -60,7 +79,7 @@ function HomeScreen({route}) {
               borderBottomColor:"#f4f4f4",
               borderBottomWidth:1,
               paddingBottom:12
-            }}>
+            }]}>
               <Image source={tukLogo} resizeMode="contain" style={{height:100,width:100,borderRadius:70,borderColor:"gray",borderWidth:4}}></Image>
               <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.name}</Text>
               <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.phnumber}</Text>

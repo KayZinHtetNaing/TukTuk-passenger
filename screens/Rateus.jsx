@@ -1,10 +1,17 @@
 import { View, Text, TouchableOpacity, ScrollView, Alert ,TextInput} from 'react-native';
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import tw from 'twrnc';
 import CheckBox from 'react-native-check-box';
 import axios from 'axios';
+import { EventRegister } from 'react-native-event-listeners'
+import themeContext from '../theme/themeContext'
 
 export default function RateusScreen() {
+
+  const theme=useContext(themeContext)
+
+    const [darkMode,setDarkMode]=useState(false)
+
   const [name, setName] = useState('');
   const [feedback, setFeedback] = useState('');
   const [suggestion, setSuggestion] = useState('');
@@ -72,7 +79,7 @@ export default function RateusScreen() {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={[{backgroundColor:theme.backgroundColor},{color:theme.color}]}>
       <View style={tw`flex-1 bg-white min-h-full`}>
         <View style={tw`flex-1 justify-center items-center mt-5`}>
           <Text style={tw`text-orange-500 font-bold text-3xl tracking-wide leading-normal`}>App Feedback</Text>

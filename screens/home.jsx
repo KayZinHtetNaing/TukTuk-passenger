@@ -9,13 +9,14 @@ import {
   ScrollView,
   Alert
 } from "react-native";
-import React, { useState } from "react";
-import MapView from "react-native-maps";
+import React, { useState,useEffect } from "react";
+import MapView,{Marker} from "react-native-maps";
+// import * as Location from 'expo-location';
 import tw from "twrnc";
 import axios from "axios";
 import { TextInput, underlineColorAndroid } from "react-native";
 import ModalPicker from "./ModalPicker";
-
+import MapComponent from "./MapComponent";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -25,6 +26,9 @@ const latitudeDelta = 0.025;
 const longitudeDelta = 0.025;
 
 export default function HomeScreen() {
+
+
+
 const [name, setName] = useState('') ;
 const [phoneNumber,setPhone] = useState('') ;
 const [from , setFrom] = useState('');
@@ -34,7 +38,7 @@ const [NOcar, setCar] =useState ('');
 const createLocation = async (contact) => {
   try {
     const { data } = await axios.post(
-      "http://192.168.1.198:3000/map_location",
+      "http://192.168.56.1:3000/map_location",
       contact
     );
     console.log("Response from server:", data);
@@ -79,14 +83,14 @@ const [errorMessage , setErrorMessage] =useState(null);
 
 
 
-  map = {
-    region: {
-      latitudeDelta,
-      longitudeDelta,
-      latitude: 18.818752452008397,
-      longitude: 95.220778226511,
-    },
-  };
+  // map = {
+  //   region: {
+  //     latitudeDelta,
+  //     longitudeDelta,
+  //     latitude: 18.818752452008397,
+  //     longitude: 95.220778226511,
+  //   },
+  // };
 
   //   onChangeValue = region =>{
   // alert(JSON.stringify(region))
@@ -94,6 +98,10 @@ const [errorMessage , setErrorMessage] =useState(null);
   //       region
   //     })
   //   }
+  // <MapView
+        //   style={{ width: "100%", height: 300 }}
+        //   initialRegion={this.map.region}
+        // />
   const [chooseData, setchooseData] = useState("Select Number of car...");
   const [isModalVisible, setisModalVisible] = useState(false);
 
@@ -106,111 +114,110 @@ const [errorMessage , setErrorMessage] =useState(null);
   return (
     <ScrollView>
       <View style={{ flex: 1 }}>
-        <MapView
-          style={{ width: "100%", height: 300 }}
-          initialRegion={this.map.region}
-        />
-
+        <View style={{ width: "100%", height: 500 }}>
+        <MapComponent/>
+        </View>
         <View style={tw`flex-1 px-8 pt-8 bg-white`}>
-          <View style={tw`form space-y-2`}>
-            <Text style={tw`text-gray-700 ml-4 mb-1`}>Name</Text>
-            <TextInput
-  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-  placeholder="Enter Your Name"
-  onChangeText={(text) => setName(text)}
-  value={name}
+        <View style={tw`form space-y-2`}>
+          <Text style={tw`text-gray-700 ml-4 mb-1`}>Name</Text>
+          <TextInput
+style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+placeholder="Enter Your Name"
+onChangeText={(text) => setName(text)}
+value={name}
 />
 <Text style={tw`text-gray-700 ml-4 mb-1`}>Phone Number</Text>
 
 <TextInput
-  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-  placeholder="Enter Your Phone number"
-  keyboardType = 'numeric'
-  onChangeText={(text) => setPhone(text)}
-  value={phoneNumber}
+style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+placeholder="Enter Your Phone number"
+keyboardType = 'numeric'
+onChangeText={(text) => setPhone(text)}
+value={phoneNumber}
 />
 
 <Text style={tw`text-gray-700 ml-4 mb-1`}>From</Text>
 
 <TextInput
-  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-  placeholder="Entery Your Location"
-  onChangeText={(text) => setFrom(text)}
-  value={from}
+style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+placeholder="Entery Your Location"
+onChangeText={(text) => setFrom(text)}
+value={from}
 />
 
 <Text style={tw`text-gray-700 ml-4 mb-1`}>To</Text>
 
 <TextInput
-  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-  placeholder="Enter Location where You wanna Go"
-  onChangeText={(text) => setTo(text)}
-  value={to}
+style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+placeholder="Enter Location where You wanna Go"
+onChangeText={(text) => setTo(text)}
+value={to}
 />
 
 <Text style={tw`text-gray-700 ml-4 mb-1`}>Number of Tuk-Tuk</Text>
 
 <TextInput
-  style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
-  placeholder="Enter number of Tuk-Tuk what you want"
-  keyboardType = 'numeric'
-  onChangeText={(text) => setCar(text)}
-  value={NOcar}
+style={tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-2`}
+placeholder="Enter number of Tuk-Tuk what you want"
+keyboardType = 'numeric'
+onChangeText={(text) => setCar(text)}
+value={NOcar}
 />
 
 
 
-            {/* <Text style={tw`text-gray-700 ml-4 mb-1`}>Numbers of Car</Text>
-            <TouchableOpacity
-              onPress={() => changeModalVisibility(true)}
-              style={[
-                styles.touchableOpacity,
-                tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-3`,
-              ]}
-              onChange={(e) => {
-                  setCar(e.nativeEvent.text);
-                  console.log(e.nativeEvent.text);
-                }}
-            >
-              <Text style={tw`text-gray-700`}>{chooseData}</Text>
-            </TouchableOpacity> */}
+          {/* <Text style={tw`text-gray-700 ml-4 mb-1`}>Numbers of Car</Text>
+          <TouchableOpacity
+            onPress={() => changeModalVisibility(true)}
+            style={[
+              styles.touchableOpacity,
+              tw`p-3 bg-gray-100 text-gray-700 rounded-2xl mb-3`,
+            ]}
+            onChange={(e) => {
+                setCar(e.nativeEvent.text);
+                console.log(e.nativeEvent.text);
+              }}
+          >
+            <Text style={tw`text-gray-700`}>{chooseData}</Text>
+          </TouchableOpacity> */}
 
-            <Modal
-              transparent={true}
-              animationType="fade"
-              visible={isModalVisible}
-              nRequestClose={() => changeModalVisibility(false)}
-            >
-              <ModalPicker
-                changeModalVisibility={changeModalVisibility}
-                setData={setData}
-              />
-            </Modal>
+          <Modal
+            transparent={true}
+            animationType="fade"
+            visible={isModalVisible}
+            nRequestClose={() => changeModalVisibility(false)}
+          >
+            <ModalPicker
+              changeModalVisibility={changeModalVisibility}
+              setData={setData}
+            />
+          </Modal>
 
-            <TouchableOpacity
-              style={tw`py-3 rounded-full bg-orange-400 mb-5`}
-              onPress={() => {sendtoBackend()}}
+          <TouchableOpacity
+            style={tw`py-3 rounded-full bg-orange-400 mb-5`}
+            onPress={() => {sendtoBackend()}}
+          >
+            <Text
+              style={tw`font-xl font-bold text-center text-white text-base`}
             >
-              <Text
-                style={tw`font-xl font-bold text-center text-white text-base`}
-              >
-                Go
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* <View style={tw`flex-row justify-center mt-5`}>
-              <Text style={tw`font-semibold text-grey-700`}>
-                Already have an account?
-              </Text>
-              <TouchableOpacity
-                style={tw`font-semibold text-orange-400`}
-                onPress={() => navigation.navigate("Login")}
-              >
-                Login
-              </TouchableOpacity>
-            </View> */}
+              Go
+            </Text>
+          </TouchableOpacity>
         </View>
+
+        {/* <View style={tw`flex-row justify-center mt-5`}>
+            <Text style={tw`font-semibold text-grey-700`}>
+              Already have an account?
+            </Text>
+            <TouchableOpacity
+              style={tw`font-semibold text-orange-400`}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Login
+            </TouchableOpacity>
+          </View> */}
+      </View>
+        
       </View>
     </ScrollView>
   );

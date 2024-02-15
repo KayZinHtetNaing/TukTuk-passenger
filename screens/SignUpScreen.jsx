@@ -24,7 +24,7 @@ export default function SignupScreen({route}) {
  
     // animation: 'myAnim 2s ease 0s 1 normal forwards',
 const createAccount = async(contact) => {
-  const {data} = await axios.post("http://192.168.1.198:3000/passengers",contact)
+  const {data} = await axios.post("http://192.168.56.1:3000/passengers",contact)
 }
   
   

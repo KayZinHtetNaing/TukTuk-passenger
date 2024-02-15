@@ -1,5 +1,5 @@
 import {View,Text,TouchableOpacity} from 'react-native';
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import tw from 'twrnc';
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,8 +8,13 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { canOpenURL, openURL } from 'expo-linking';
+import { EventRegister } from 'react-native-event-listeners'
+import themeContext from '../theme/themeContext'
 
 export default function HelpcenterScreen() {
+  const theme=useContext(themeContext)
+
+  const [darkMode,setDarkMode]=useState(false)
 
     const navigation = useNavigation();
 
@@ -19,10 +24,10 @@ export default function HelpcenterScreen() {
     const [canOpenMail , setcanOpenMail] = useState(false);
     canOpenURL("mailto:pyaepyae@gmail.com").then((canOpen) => setcanOpenMail(canOpen));
     return ( 
-        <View >
+        <View style={{backgroundColor:theme.backgroundColor}}>
        <View style={tw`flex items-center`}>
        
-       <Text style={tw`p-3 ml-2 text-orange-700`}>
+       <Text style={tw`p-3 ml-2 text-orange-700`} style={{color:theme.color}}>
        If you would like to report any convenience, please contact us using the contact details below.
        </Text>
 
