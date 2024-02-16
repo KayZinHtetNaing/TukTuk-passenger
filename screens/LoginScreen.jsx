@@ -14,7 +14,7 @@ export default function LoginScreen() {
   const [contact, setContact] = useState([]);
   const getContact = async () => {
     try {
-      const response = await axios.get("http://192.168.56.1:3000/passengers");
+      const response = await axios.get("http://192.168.1.246:3000/passengers");
       console.log(response.data.data); // Log the fetched data
       setContact(response.data.data);
     } catch (error) {
@@ -122,6 +122,7 @@ onChangeText={(text) => setFdata({...fdata, name:text}) }
 
             <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`} 
              placeholder="Enter Your Phone number"
+              keyboardType = 'numeric'
             onChangeText={(text) => setFdata({...fdata, phnumber:text}) }
 
 

@@ -81,8 +81,8 @@ function HomeScreen({route}) {
               paddingBottom:12
             }]}>
               <Image source={tukLogo} resizeMode="contain" style={{height:100,width:100,borderRadius:70,borderColor:"gray",borderWidth:4}}></Image>
-              <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.name}</Text>
-              <Text style={{fontSize:18,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.phnumber}</Text>
+              <Text style={{fontSize:20,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.name}</Text>
+              <Text style={{fontSize:16,marginVertical:6,color:"#111"}}>{message.phnumber}</Text>
             </View>
             <DrawerItemList {...props} />
            </SafeAreaView>
