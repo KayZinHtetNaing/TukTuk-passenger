@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View,Text } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { StyleSheet, View,Text,TouchableOpacity,Image } from 'react-native';
+import MapView, { Marker,Callout } from 'react-native-maps';
+import tw from 'twrnc';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native'
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { canOpenURL, openURL } from 'expo-linking';
 import * as Location from 'expo-location';
 
+
+
 const MapComponent = () => {
+  
+  const navigation = useNavigation();
+
+  const [canOpenTelephone , setcanOpenTelephone] = useState(false);
+  canOpenURL("tel:+959459496549").then((canOpen) => setcanOpenTelephone(canOpen));
+
   const [location, setLocation] = useState(null);
   const [markers, setMarkers] = useState([]);
 
   const [driverLocation, setdriverLocation] = useState([]);
   const getdriverLocation = async () => {
     try {
-      const response = await axios.get("http://192.168.1.106:3000/driverLocation");
+      const response = await axios.get("http://192.168.43.9:3000/driverLocation");
       // console.log(response.data.data); // Log the fetched data
       setdriverLocation(response.data.data);
     } catch (error) {
@@ -24,10 +40,6 @@ const MapComponent = () => {
   },[])
 
  
-
-
-
-
 
   useEffect(() => {
     (async () => {
@@ -58,6 +70,10 @@ const MapComponent = () => {
     setMarkers(defaultMarkers);
   }, []);
 
+  const calloutPressed= (ev:any)=>{
+   // console.log(ev);
+  };
+
   return (
     <View style={styles.container}>
       {location ? (
@@ -86,7 +102,16 @@ const MapComponent = () => {
               coordinate={marker}
               title={marker.title}
               pinColor="green" 
-            />
+            >
+            <Callout onPress={calloutPressed} tooltip>
+            <View style={{flex:1,padding:5,backgroundColor:"white"}}>
+            <Text style={{fontSize:15}}>{marker.title}</Text>
+            <Image source={require("../assets/images/p10.png")} style={{width:150,height:150}}/> 
+            <TouchableOpacity onPress={() => openURL("tel:+959459496549")} style={tw`bg-orange-500 mx-5 my-5 w-30 rounded-xl py-3 max-w-sm text-center font-bold `}>
+            <Text style={tw`text-center`}  disabled={canOpenTelephone}>Call out</Text></TouchableOpacity>
+            </View>
+          </Callout>
+          </Marker>
           ))}
 
           {driverLocation?.map((driverLocation) => (
@@ -98,7 +123,9 @@ const MapComponent = () => {
               }}
               title="I am ready to pick up"
               pinColor="blue" 
-            />
+            >
+           
+            </Marker>
           ))}
 
         </MapView>
