@@ -1,31 +1,57 @@
-import { View, Text, TouchableOpacity, Image,StyleSheet,Title } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, Image,StyleSheet,Title, Alert } from "react-native";
+import React,{useState,useEffect} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
 import { TextInput,underlineColorAndroid } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import { FontAwesome } from '@expo/vector-icons';
+import axios from "axios";
 //import ImagePicker from 'react-native-image-crop-picker';
 
 const logoImg=require("../assets/p3.png");
 
 const tukLogo=require("../assets/images/login.png")
 
-export default function ProfileScreen() {
-    //const  [profile, setProfile] = useState(null)
-    const navigation = useNavigation();
+export default function ProfileScreen({route}) {
+  const {message} = route.params;
+  const phoneNumber= message.phoneNumber;
+  const cpassword= message.cpassword;
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
-    // const imagePick = () =>{
-    //     ImagePicker.openPicker({
-    //       width:400,
-    //       height:400,
-    //       cropping:true,
-    //     }),then(image=>{
-    //       console.log(image);
-    //       setProfile(image.path)
-    //     });
-    // }
+    
+  // const [contact, setContact] = useState([]);
+  // const getContact = async () => {
+  //     try {
+  //       const response = await axios.get(`http://192.168.43.239:3000/passengers/${message._id}`);
+  //       // console.log(response.data.data); // Log the fetched data
+  //       setContact(response.data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching contact:", error);
+  //     }
+  //   }
+  //   useEffect(() =>{
+  //     getContact();
+  //   },[])
+
+
+    const updateProfile = async(updateData) =>{
+      const {data} = await axios.put(`http://192.168.43.239:3000/passengers/${message._id}`,updateData)
+    }
+    const updateProfileHandler = () =>{
+      
+      const updateData ={name,phoneNumber,password,cpassword};
+      console.log(updateData);
+      updateProfile(updateData);
+      navigation.navigate("Home", { message: updateData }); // Passing the user data to the home screen
+
+      Alert.alert("Your Update Successful");
+    }
+
+  
+
         return(
             <View style={tw`flex-1 bg-orange-400`}>
             <SafeAreaView style={tw`flex`}>
@@ -42,7 +68,7 @@ export default function ProfileScreen() {
                       {/* <FontAwesome name="pencil-square-o" size={24} color="white" /> */}
                     </TouchableOpacity>
                     <View style={styles.textContainer}>
-                        <Text style={{fontSize:18,color:"white",fontWeight:"bold"}}>Ma Phyu Pwint</Text>
+                        <Text style={{fontSize:18,color:"white",fontWeight:"bold"}}>{message.name}</Text>
                     </View>
                 </View>
               </View>
@@ -53,22 +79,29 @@ export default function ProfileScreen() {
                 <TextInput
                   style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
                   // underlineColorAndroid={tw`text-orange-400`}
-                  value=""
-                  placeholder="Enter Your Name"
+                  
+                   placeholder="Enter New Name"
+                  defaultValue={message.name}
+                  onChangeText={(text) => setName(text)}
+                  
                 />
       
-                <Text style={tw`text-gray-700 ml-4 mb-3`}>Phone Number</Text>
+                <Text style={tw`text-gray-700 ml-4 mb-3`}>Password</Text>
                 <TextInput
                   style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
                   secureTextEntry
-                  value=""
-                  placeholder="Enter Your Phone number"
+                  
+                  placeholder="Enter New Password"
+                  
+                  defaultValue={message.password}
+                  onChangeText={(text) => setPassword(text)}
+                  
                 />
       
       
                 <TouchableOpacity
                   style={tw`py-3 rounded-full bg-orange-400`}
-                  onPress={() => navigation.navigate("InputPh")}
+                  onPress={() =>updateProfileHandler()}
                 >
                   <Text
                     style={tw`font-xl font-bold text-center text-white text-base`}

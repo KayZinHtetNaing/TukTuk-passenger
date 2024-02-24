@@ -17,7 +17,7 @@ export default function SignupScreen({route}) {
 
 
   const [name , setName] = useState('');
-  const [phnumber , setphoneNumber] = useState(message);
+  const [phoneNumber , setphoneNumber] = useState(message);
   const [password , setPassword] = useState('');
   const [cpassword , setcPassword] = useState('');
 
@@ -46,8 +46,8 @@ const createAccount = async(contact) => {
     }
     else {
       
-    console.log(name , phnumber , password ,cpassword);
-    const contact ={name, phnumber,password,cpassword};
+    // console.log(name , phoneNumber , password ,cpassword);
+    const contact ={name, phoneNumber,password,cpassword};
      
       navigation.navigate("Home",{message:contact});
 
