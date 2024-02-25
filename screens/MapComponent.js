@@ -12,7 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { canOpenURL, openURL } from 'expo-linking';
 import * as Location from 'expo-location';
 
-
+const tukLogo=require("../assets/images/tuk2.png")
 
 const MapComponent = () => {
   
@@ -57,10 +57,10 @@ const MapComponent = () => {
 
 
   const defaultMarkers = [
-    { latitude: 17.3221, longitude: 96.4663, title:'Default Marker 1' },
-    { latitude: 16.871311, longitude: 96.199379, title: 'Deffault Marker 2' },
-    { latitude: 18.3391, longitude: 95.6195, title: 'Marker 3' },
-    { latitude: 21.9588, longitude: 96.0891, title: 'Marker 4' },
+    { latitude: 18.837826207395654, longitude: 95.33249633867997, title:'Default Marker 1' },
+    { latitude: 18.78629231335528, longitude: 95.28559558100723, title: 'Deffault Marker 2' },
+    { latitude: 18.82241106975294, longitude: 95.23814828255962, title: 'Marker 3' },
+    { latitude: 18.82527708082549, longitude: 95.25823133683004, title: 'Marker 4' },
    
   ];
 
@@ -97,11 +97,13 @@ const MapComponent = () => {
 
           
           {markers.map((marker, index) => (
-            <Marker
+            <Marker 
               key={index}
               coordinate={marker}
               title={marker.title}
-              pinColor="green" 
+              pinColor="blue" 
+              image={tukLogo}
+              style={{width:10,height:10}}
             >
             <Callout onPress={calloutPressed} tooltip>
             <View style={{flex:1,padding:5,backgroundColor:"white"}}>
@@ -121,8 +123,10 @@ const MapComponent = () => {
                 latitude: driverLocation.latitude,
                 longitude: driverLocation.longitude,
               }}
+             
               title="I am ready to pick up"
               pinColor="blue" 
+
             >
            
             </Marker>
