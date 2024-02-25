@@ -27,7 +27,7 @@ const MapComponent = () => {
   const [driverLocation, setdriverLocation] = useState([]);
   const getdriverLocation = async () => {
     try {
-      const response = await axios.get("http://192.168.43.9:3000/driverLocation");
+      const response = await axios.get("http://192.168.43.239:3000/driverLocation");
       // console.log(response.data.data); // Log the fetched data
       setdriverLocation(response.data.data);
     } catch (error) {
@@ -124,7 +124,16 @@ const MapComponent = () => {
               title="I am ready to pick up"
               pinColor="blue" 
             >
-           
+             <Callout  tooltip>
+            <View style={{flex:1,padding:5,backgroundColor:"white"}}>
+            <Image source={require("../assets/images/p10.png")} style={{width:150,height:150}}/> 
+            <Text style={{fontSize:15}}>အမည်:{driverLocation.name}</Text>
+            <Text style={{fontSize:15}}>လိုင်စင်နံပါတ်:{driverLocation.licenseNo}</Text>
+
+            <TouchableOpacity onPress={() => openURL(`tel:${driverLocation.phoneNumber}`)} style={tw`bg-orange-500 mx-5 my-5 w-30 rounded-xl py-3 max-w-sm text-center font-bold `}>
+            <Text style={tw`text-center`}  disabled={canOpenTelephone}>Call out</Text></TouchableOpacity>
+            </View>
+          </Callout>
             </Marker>
           ))}
 
