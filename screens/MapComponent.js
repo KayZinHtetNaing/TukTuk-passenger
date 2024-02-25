@@ -13,7 +13,6 @@ import { canOpenURL, openURL } from 'expo-linking';
 import * as Location from 'expo-location';
 
 
-
 const MapComponent = () => {
   
   const navigation = useNavigation();
@@ -102,7 +101,10 @@ const MapComponent = () => {
               coordinate={marker}
               title={marker.title}
               pinColor="blue" 
+              
+              
             >
+
             <Callout  tooltip>
             <View style={{flex:1,padding:5,backgroundColor:"white"}}>
             <Text style={{fontSize:15}}>{marker.title}</Text>
