@@ -1,6 +1,6 @@
 //import 'react-native-gesture-handler';
 // import MapView from 'react-native-maps';
-import { StyleSheet,View, Text,Image } from "react-native";
+import { StyleSheet,View, Text,Image,TouchableOpacity } from "react-native";
 import React,{useState,useContext,useEffect} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import 'react-native-gesture-handler';
@@ -9,7 +9,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {NavigatonContainer,DarkTheme,DefaultTheme} from '@react-navigation/native';
+import {NavigatonContainer,DarkTheme,DefaultTheme,useNavigation} from '@react-navigation/native';
 import home from './home';
 import PassengerHome from "./PassengerHome";
 import Profile from './Profile';
@@ -19,6 +19,7 @@ import Rateus from './Rateus';
 import Helpcenter from "./Helpcenter";
 import Privacypolicy from './Privacypolicy';
 import Notification from "./Notification";
+import LoginScreen from "./LoginScreen";
 import theme from "../theme/theme";
 import themeContext from "../theme/themeContext";
 import { EventRegister } from 'react-native-event-listeners'
@@ -35,6 +36,7 @@ function HomeScreen({route}) {
   const{message} = route.params;
 
   // const theme=useContext(themeContext)
+  const navigation = useNavigation();
 
   const [darkMode,setDarkMode]=useState(false)
 
@@ -51,7 +53,7 @@ function HomeScreen({route}) {
 
 
   return ( 
-    <Drawer.Navigator initialRouteName="Home" theme={darkMode === true? DarkTheme : DefaultTheme}
+    <Drawer.Navigator initialRouteName="Home" 
     screenOptions={{
       drawerStyle:{
         backgroundColor: "#FFF",
@@ -70,7 +72,7 @@ function HomeScreen({route}) {
     drawerContent={
       (props)=>{
         return(
-           <SafeAreaView>
+           <SafeAreaView theme={darkMode === true? DarkTheme : DefaultTheme}>
             <View style={[{
               height:200,
               width:"100%",
@@ -85,6 +87,12 @@ function HomeScreen({route}) {
               <Text style={{fontSize:16,marginVertical:6,color:"#111"}}>{message.phoneNumber}</Text>
             </View>
             <DrawerItemList {...props} />
+            <View >
+            <TouchableOpacity onPress = {() => navigation.navigate('Login')} style={styles.bubble}>
+            <Ionicons name="exit" size={20} color="black" style={{marginLeft:10}}/>
+            <Text style={{paddingRight:10}}>Logout</Text>
+            </TouchableOpacity>
+            </View>
            </SafeAreaView>
         );
       }
@@ -170,6 +178,8 @@ function HomeScreen({route}) {
           ),
        }}
     />
+
+   
     
   </Drawer.Navigator>
 );
@@ -187,6 +197,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  bubble:{
+    flexDirection:"row",
+    marginLeft:20,
+    marginTop:20,
+    fontSize:20,
+    fontWeight:"bold"
+    
+  }
 });
 
 export default HomeScreen;

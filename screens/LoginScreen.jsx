@@ -98,7 +98,6 @@ export default function LoginScreen() {
 
             <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`} 
              placeholder="Enter Your Phone number"
-              keyboardType = 'numeric'
             onChangeText={(text) => setFdata({...fdata, phnumber:text}) }
 
 

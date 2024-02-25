@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image ,Alert} from "react-native";
+import { View, Text, TouchableOpacity, Image ,Alert,ScrollView} from "react-native";
 import React,{useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -46,7 +46,7 @@ const createAccount = async(contact) => {
     }
     else {
       
-    // console.log(name , phoneNumber , password ,cpassword);
+     console.log(name , phoneNumber , password ,cpassword);
     const contact ={name, phoneNumber,password,cpassword};
      
       navigation.navigate("Home",{message:contact});
@@ -84,9 +84,8 @@ const createAccount = async(contact) => {
             style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
             
             placeholder="Enter Your Name"
-            onChange={(e) => {
-                  setName(e.target.value);
-                }}
+            onChangeText={(text) => setName(text)}
+              value={name}
             // onChangeText={(text) => setFdata({...fdata, name:text}) }
           />
            <Text style={tw`text-gray-700 ml-4 mb-3`}>Phone Number</Text>
@@ -108,9 +107,8 @@ const createAccount = async(contact) => {
             secureTextEntry
           
             placeholder="Enter Your Password"
-            onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+            onChangeText={(text) => setPassword(text)}
+              value={password}
             // onChangeText={(text) => setFdata({...fdata , password: text})}
           />
 
@@ -120,9 +118,8 @@ const createAccount = async(contact) => {
             secureTextEntry
             
             placeholder="Enter Your Confirm Password"
-            onChange={(e) => {
-                  setcPassword(e.target.value);
-                }}
+            onChangeText={(text) => setcPassword(text)}
+            value={cpassword}
             // onChangeText = {(text) => setFdata({...fdata, cpassword: text})}
           />
 
