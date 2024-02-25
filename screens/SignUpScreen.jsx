@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image ,Alert} from "react-native";
+import { View, Text, TouchableOpacity, Image ,Alert,ScrollView} from "react-native";
 import React,{useState} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -17,14 +17,14 @@ export default function SignupScreen({route}) {
 
 
   const [name , setName] = useState('');
-  const [phnumber , setphoneNumber] = useState(message);
+  const [phoneNumber , setphoneNumber] = useState(message);
   const [password , setPassword] = useState('');
   const [cpassword , setcPassword] = useState('');
 
  
     // animation: 'myAnim 2s ease 0s 1 normal forwards',
 const createAccount = async(contact) => {
-  const {data} = await axios.post("http://192.168.43.9:3000/passengers",contact)
+  const {data} = await axios.post("http://192.168.43.239:3000/passengers",contact)
 }
   
   
@@ -46,8 +46,8 @@ const createAccount = async(contact) => {
     }
     else {
       
-    console.log(name , phnumber , password ,cpassword);
-    const contact ={name, phnumber,password,cpassword};
+     console.log(name , phoneNumber , password ,cpassword);
+    const contact ={name, phoneNumber,password,cpassword};
      
       navigation.navigate("Home",{message:contact});
 
@@ -84,9 +84,8 @@ const createAccount = async(contact) => {
             style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
             
             placeholder="Enter Your Name"
-            onChange={(e) => {
-                  setName(e.target.value);
-                }}
+            onChangeText={(text) => setName(text)}
+              value={name}
             // onChangeText={(text) => setFdata({...fdata, name:text}) }
           />
            <Text style={tw`text-gray-700 ml-4 mb-3`}>Phone Number</Text>
@@ -108,9 +107,8 @@ const createAccount = async(contact) => {
             secureTextEntry
           
             placeholder="Enter Your Password"
-            onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+            onChangeText={(text) => setPassword(text)}
+              value={password}
             // onChangeText={(text) => setFdata({...fdata , password: text})}
           />
 
@@ -120,9 +118,8 @@ const createAccount = async(contact) => {
             secureTextEntry
             
             placeholder="Enter Your Confirm Password"
-            onChange={(e) => {
-                  setcPassword(e.target.value);
-                }}
+            onChangeText={(text) => setcPassword(text)}
+            value={cpassword}
             // onChangeText = {(text) => setFdata({...fdata, cpassword: text})}
           />
 

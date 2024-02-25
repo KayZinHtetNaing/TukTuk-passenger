@@ -57,10 +57,10 @@ const MapComponent = () => {
 
 
   const defaultMarkers = [
-    { latitude: 18.837826207395654, longitude: 95.33249633867997, title:'Default Marker 1' },
-    { latitude: 18.78629231335528, longitude: 95.28559558100723, title: 'Deffault Marker 2' },
-    { latitude: 18.82241106975294, longitude: 95.23814828255962, title: 'Marker 3' },
-    { latitude: 18.82527708082549, longitude: 95.25823133683004, title: 'Marker 4' },
+    { latitude: 18.827977877146274, longitude: 95.25783681375435, title:'Default Marker 1' },
+    { latitude: 18.82066629451907,longitude:  95.22127294359886, title: 'Deffault Marker 2' },
+    { latitude: 18.840560083203766, longitude: 95.27074778458567, title: 'Marker 3' },
+    { latitude: 18.78686640422625, longitude: 95.28598927716047, title: 'Marker 4' },
    
   ];
 
@@ -70,9 +70,9 @@ const MapComponent = () => {
     setMarkers(defaultMarkers);
   }, []);
 
-  const calloutPressed= (ev:any)=>{
-   // console.log(ev);
-  };
+  // const calloutPressed= (ev:any)=>{
+  //  // console.log(ev);
+  // };
 
   return (
     <View style={styles.container}>
@@ -101,11 +101,10 @@ const MapComponent = () => {
               key={index}
               coordinate={marker}
               title={marker.title}
-              pinColor="blue" 
-              image={tukLogo}
-              style={{width:10,height:10}}
+              pinColor="blue"
+              image={tukLogo} 
             >
-            <Callout onPress={calloutPressed} tooltip>
+            <Callout  tooltip>
             <View style={{flex:1,padding:5,backgroundColor:"white"}}>
             <Text style={{fontSize:15}}>{marker.title}</Text>
             <Image source={require("../assets/images/p10.png")} style={{width:150,height:150}}/> 
@@ -126,9 +125,18 @@ const MapComponent = () => {
              
               title="I am ready to pick up"
               pinColor="blue" 
-
+              image={tukLogo} 
             >
-           
+             <Callout  tooltip>
+            <View style={{flex:1,padding:5,backgroundColor:"white"}}>
+            <Image source={require("../assets/images/p10.png")} style={{width:150,height:150}}/> 
+            <Text style={{fontSize:15}}>အမည်:{driverLocation.name}</Text>
+            <Text style={{fontSize:15}}>လိုင်စင်နံပါတ်:{driverLocation.licenseNo}</Text>
+
+            <TouchableOpacity onPress={() => openURL(`tel:${driverLocation.phoneNumber}`)} style={tw`bg-orange-500 mx-5 my-5 w-30 rounded-xl py-3 max-w-sm text-center font-bold `}>
+            <Text style={tw`text-center`}  disabled={canOpenTelephone}>Call out</Text></TouchableOpacity>
+            </View>
+          </Callout>
             </Marker>
           ))}
 

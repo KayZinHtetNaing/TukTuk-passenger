@@ -33,6 +33,7 @@ const tukLogo=require("../assets/p3.png")
 
 const Drawer = createDrawerNavigator();
 function HomeScreen({route}) {
+  const{message} = route.params;
 
   // const theme=useContext(themeContext)
   const navigation = useNavigation();
@@ -51,7 +52,6 @@ function HomeScreen({route}) {
   },[darkMode])
 
 
-  const{message} = route.params;
   return ( 
     <Drawer.Navigator initialRouteName="Home" 
     screenOptions={{
@@ -84,7 +84,7 @@ function HomeScreen({route}) {
             }]}>
               <Image source={tukLogo} resizeMode="contain" style={{height:100,width:100,borderRadius:70,borderColor:"gray",borderWidth:4}}></Image>
               <Text style={{fontSize:20,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.name}</Text>
-              <Text style={{fontSize:16,marginVertical:6,color:"#111"}}>{message.phnumber}</Text>
+              <Text style={{fontSize:16,marginVertical:6,color:"#111"}}>{message.phoneNumber}</Text>
             </View>
             <DrawerItemList {...props} />
             <View>
@@ -127,7 +127,9 @@ function HomeScreen({route}) {
     <Drawer.Screen
       name="Profile"
       component={Profile}
-      options={{ drawerLabel: 'Profile',
+      initialParams={{ message: message }} // Pass the message prop to the Home component
+
+      options={{ drawerLabel: 'Edit Profile',
       title: "Profile",
           drawerIcon: () => (
             <FontAwesome name="user-circle-o" size={20} color="black" />
