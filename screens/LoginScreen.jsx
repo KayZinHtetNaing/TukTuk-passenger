@@ -1,4 +1,4 @@
-import { View, Text,TouchableOpacity,Image , Alert} from 'react-native'
+import { View, Text,TouchableOpacity,Image , Alert,ScrollView} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
@@ -91,22 +91,19 @@ export default function LoginScreen() {
       }
         <View style={tw`form space-y-2`}>
  
-
-
-
-            <Text style={tw`text-gray-700 ml-4 mb-3`}>Phone Number</Text>
+            <Text style={tw`text-gray-700 ml-4 mb-3`}>ဖုန်းနံပါတ်</Text>
 
             <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`} 
-             placeholder="Enter Your Phone number"
+             placeholder="ဖုန်းနံပါတ်ရိုက်ထည့်ပါ"
             onChangeText={(text) => setFdata({...fdata, phnumber:text}) }
 
 
              />
 
-            <Text style={tw`text-gray-700 ml-4 mb-3`}>Password</Text>
+            <Text style={tw`text-gray-700 ml-4 mb-3`}>စကားဝှက်</Text>
             <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-10`} 
             secureTextEntry 
-            placeholder="Enter Your Password"
+            placeholder="စကားဝှက်ရိုက်ထည့်ပါ"
             
             onChangeText={(text) => setFdata({...fdata, password:text}) }
 
@@ -118,12 +115,12 @@ export default function LoginScreen() {
             }}
             
             >
-              <Text style={tw`font-xl font-bold text-center text-white text-base`}>Login to Your Account</Text>
+              <Text style={tw`font-xl font-bold text-center text-white text-base`}>အကောင့်ဝင်ပါ</Text>
             </TouchableOpacity>
         </View>
         <View style={tw`flex-row justify-center mt-5`}>
               
-              <TouchableOpacity style={tw`font-semibold text-orange-400`} onPress={() => navigation.navigate("InputPh")}><Text>Don't have account?Create account</Text></TouchableOpacity>
+              <TouchableOpacity style={tw`font-semibold text-orange-400`} onPress={() => navigation.navigate("InputPh")}><Text>အကောင့်မရှိလျှင် အကောင့်တစ်ခုတည်ဆောက်ရန်</Text></TouchableOpacity>
             </View>
     </View>
   </View>

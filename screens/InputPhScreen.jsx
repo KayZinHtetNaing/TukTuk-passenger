@@ -1,5 +1,4 @@
 import { View, Text,TouchableOpacity,Image ,Alert} from 'react-native'
-
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import tw from 'twrnc';
@@ -13,12 +12,10 @@ import firebase from 'firebase/compat/app';
 const tukLogo=require("../assets/images/login.png")
 
 export default function InputPhScreen() { 
-    const navigation = useNavigation();
 
+    const navigation = useNavigation();
     const [phoneNumber , setPhoneNumber] = useState('');
 
-    
-    
     const recaptchaVerifier = useRef(null);
     const sendVerification = () => {
        
@@ -45,13 +42,11 @@ export default function InputPhScreen() {
                 <View style={tw`flex-1 px-8 pt-8 mt-35 bg-white rounded-t-10 `}>
                     <View style={tw`form space-y-2`}>
 
-    
-
-                        <Text style={tw`text-gray-700 ml-4 font-normal text-18px text-center`}>Enter Phone Number</Text>
+                        <Text style={tw`text-gray-700 ml-4 font-normal text-18px text-center`}>ဖုန်းနံပါတ်</Text>
                     
                         <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mt-5 text-center`} 
                          
-                         placeholder='Phone number with Country code'
+                         placeholder='ဖုန်းနံပါတ်ရိုက်ထည့်ပါ(ဥပမာ- +959....)'
                             onChangeText={setPhoneNumber}
                              keyboardType='phone-pad'
                              autoCompleteType='tel'
@@ -59,7 +54,7 @@ export default function InputPhScreen() {
 
                         
                         <TouchableOpacity style={tw`py-3 rounded-full bg-orange-400 mt-5 mb-10`} onPress={sendVerification}>
-                        <Text style={tw`font-xl font-bold text-center text-white  text-base`}>Continue</Text>
+                        <Text style={tw`font-xl font-bold text-center text-white  text-base`}>ဆက်သွားမည်</Text>
                         </TouchableOpacity>
                         
                     </View>

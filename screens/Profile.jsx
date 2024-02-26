@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Image,StyleSheet,Title, Alert } from "react-native";
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useContext} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
@@ -7,6 +7,8 @@ import { TextInput,underlineColorAndroid } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from "axios";
+import { EventRegister } from 'react-native-event-listeners'
+import themeContext from '../theme/themeContext'
 //import ImagePicker from 'react-native-image-crop-picker';
 
 const logoImg=require("../assets/p3.png");
@@ -14,6 +16,11 @@ const logoImg=require("../assets/p3.png");
 const tukLogo=require("../assets/images/login.png")
 
 export default function ProfileScreen({route}) {
+
+  const theme=useContext(themeContext)
+
+  const [darkMode,setDarkMode]=useState(false)
+
   const {message} = route.params;
   const phoneNumber= message.phoneNumber;
   const cpassword= message.cpassword;
@@ -53,7 +60,7 @@ export default function ProfileScreen({route}) {
   
 
         return(
-            <View style={tw`flex-1 bg-orange-400`}>
+            <View style={[{flex:1,backgroundColor:"darkorange"},{backgroundColor:theme.backgroundColor},{color:theme.color}]}>
             <SafeAreaView style={tw`flex`}>
               
               <View style={styles.profileContainer}>
@@ -64,34 +71,34 @@ export default function ProfileScreen({route}) {
                     <TouchableOpacity 
                     // onPress={imagePick}
                     style={{alignItems:"flex-end",top:-10,right:20}}>
-                      <Entypo name="pencil" size={20} style={{color:"white",borderBottomColor:"white",borderBottomWidth:3}}/>
+                      <Entypo name="pencil" size={20} style={[{color:"black",borderBottomColor:"black",borderBottomWidth:3},{color:theme.color},{borderBottomColor:theme.color}]}/>
                       {/* <FontAwesome name="pencil-square-o" size={24} color="white" /> */}
                     </TouchableOpacity>
                     <View style={styles.textContainer}>
-                        <Text style={{fontSize:18,color:"white",fontWeight:"bold"}}>{message.name}</Text>
+                        <Text style={[{fontSize:18,color:"black",fontWeight:"bold"},{color:theme.color}]}>{message.name}</Text>
                     </View>
                 </View>
               </View>
             </SafeAreaView>
-            <View style={tw`flex-1 px-8 pt-8 mt-15 bg-white rounded-t-10`}>
+            <View style={tw`flex-1 px-8 pt-8 mt-15 bg-white rounded-t-10`} >
               <View style={tw`form space-y-2`}>
-                <Text style={tw`text-gray-700 ml-4 mb-3`}>Name</Text>
+                <Text style={tw`text-gray-700 ml-4 mb-3`} >အမည်</Text>
                 <TextInput
                   style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
                   // underlineColorAndroid={tw`text-orange-400`}
                   
-                   placeholder="Enter New Name"
+                   placeholder="နာမည်အသစ်ထည့်ပါ"
                   defaultValue={message.name}
                   onChangeText={(text) => setName(text)}
                   
                 />
       
-                <Text style={tw`text-gray-700 ml-4 mb-3`}>Password</Text>
+                <Text style={tw`text-gray-700 ml-4 mb-3`}>စကားဝှက်</Text>
                 <TextInput
                   style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
                   secureTextEntry
                   
-                  placeholder="Enter New Password"
+                  placeholder="စကားဝှက်အသစ်ထည့်ပါ"
                   
                   defaultValue={message.password}
                   onChangeText={(text) => setPassword(text)}
@@ -106,7 +113,7 @@ export default function ProfileScreen({route}) {
                   <Text
                     style={tw`font-xl font-bold text-center text-white text-base`}
                   >
-                    Update Profile Information
+                    ကိုယ်ရေးအချက်အလက် ပြင်ဆင်မည်
                   </Text>
                 </TouchableOpacity>
               </View>

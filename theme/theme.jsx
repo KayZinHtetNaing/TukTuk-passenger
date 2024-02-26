@@ -2,12 +2,16 @@ const theme={
     light:{
         theme:'light',
         color:'black',
-        background:"white",
+        background:"orange",
+        borderBottomColor:"black",
+        flex:1,
     },
     dark:{
         theme:'dark',
         color:'white',
-        background:"black"
+        background:"black",
+        borderBottomColor:"white",
+        flex:1,
     }
 }
 
