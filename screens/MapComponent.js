@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { canOpenURL, openURL } from 'expo-linking';
 import * as Location from 'expo-location';
 
+const tukLogo=require("../assets/images/tuk2.png")
 
 const MapComponent = () => {
   
@@ -26,7 +27,7 @@ const MapComponent = () => {
   const [driverLocation, setdriverLocation] = useState([]);
   const getdriverLocation = async () => {
     try {
-      const response = await axios.get("http://192.168.43.239:3000/driverLocation");
+      const response = await axios.get("http://192.168.1.45:3000/driverLocation");
       // console.log(response.data.data); // Log the fetched data
       setdriverLocation(response.data.data);
     } catch (error) {
@@ -72,6 +73,7 @@ const MapComponent = () => {
   // const calloutPressed= (ev:any)=>{
   //  // console.log(ev);
   // };
+  // console.log(driverLocation);
 
   return (
     <View style={styles.container}>
@@ -96,13 +98,12 @@ const MapComponent = () => {
 
           
           {markers.map((marker, index) => (
-            <Marker
+            <Marker 
               key={index}
               coordinate={marker}
               title={marker.title}
-              pinColor="blue" 
-              
-              
+              pinColor="blue"
+              image={tukLogo} 
             >
 
             <Callout  tooltip>
@@ -123,12 +124,16 @@ const MapComponent = () => {
                 latitude: driverLocation.latitude,
                 longitude: driverLocation.longitude,
               }}
+             
               title="I am ready to pick up"
               pinColor="blue" 
+              image={tukLogo} 
             >
              <Callout  tooltip>
             <View style={{flex:1,padding:5,backgroundColor:"white"}}>
-            <Image source={require("../assets/images/p10.png")} style={{width:150,height:150}}/> 
+            <Image source={
+              {uri:driverLocation.profile}
+            } style={{width:150,height:150}}/> 
             <Text style={{fontSize:15}}>အမည်:{driverLocation.name}</Text>
             <Text style={{fontSize:15}}>လိုင်စင်နံပါတ်:{driverLocation.licenseNo}</Text>
 

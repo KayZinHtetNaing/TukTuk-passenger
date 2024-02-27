@@ -21,22 +21,12 @@ const Stack = createNativeStackNavigator();
 
 export default function AppNavigation() {
 
-  const [darkMode,setDarkMode]=useState(false)
-
-  useEffect(()=>{
-    const listener=EventRegister.addEventListener('ChangeTheme',(data)=>{
-      setDarkMode(data)
-      // console.log(data)
-    })
-    return ()=>{
-
-    EventRegister.removeAllListeners(listener)
-    }
-  },[darkMode])
+ const{darkApp,setDarkApp}=useState(true);
+ const appTheme=darkApp ? DarkTheme : DefaultTheme;
 
     return ( 
-      <themeContext.Provider value={darkMode === true? theme.dark:theme.light}>
-      <NavigationContainer theme={darkMode === true? DarkTheme : DefaultTheme}>
+      <themeContext.Provider>
+      <NavigationContainer theme={appTheme}>
         <Stack.Navigator initialRouteName = 'Welcome'>
           <Stack.Screen name = "Home" options = {{ headerShown: false }} component = {HomeScreen}/> 
           <Stack.Screen name = "Notification" options = {{ headerShown: false }} component = {Notification}/> 

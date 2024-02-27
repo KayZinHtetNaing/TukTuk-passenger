@@ -1,6 +1,6 @@
 //import 'react-native-gesture-handler';
 // import MapView from 'react-native-maps';
-import { StyleSheet,View, Text,Image,TouchableOpacity } from "react-native";
+import { StyleSheet,View, Text,Image,TouchableOpacity,ScrollView,Switch} from "react-native";
 import React,{useState,useContext,useEffect} from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import 'react-native-gesture-handler';
@@ -72,7 +72,7 @@ function HomeScreen({route}) {
     drawerContent={
       (props)=>{
         return(
-           <SafeAreaView theme={darkMode === true? DarkTheme : DefaultTheme}>
+           <SafeAreaView >
             <View style={[{
               height:200,
               width:"100%",
@@ -87,11 +87,23 @@ function HomeScreen({route}) {
               <Text style={{fontSize:16,marginVertical:6,color:"#111"}}>{message.phoneNumber}</Text>
             </View>
             <DrawerItemList {...props} />
-            <View >
+            <View>
+            <View style={tw`flex-row dark:text-white items-center ml-5`}>
+            <Text style={tw`text-sm p-2`}>Dark Mode</Text>
+            <Switch
+              style={tw`p-2`}
+              value={darkMode} 
+              onValueChange={val =>{
+                setDarkMode(val);
+              }}
+            />
+            </View>
+
             <TouchableOpacity onPress = {() => navigation.navigate('Login')} style={styles.bubble}>
             <Ionicons name="exit" size={20} color="black" style={{marginLeft:10}}/>
             <Text style={{paddingRight:10}}>Logout</Text>
             </TouchableOpacity>
+
             </View>
            </SafeAreaView>
         );

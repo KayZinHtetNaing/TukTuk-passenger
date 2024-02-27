@@ -82,12 +82,12 @@ export default function WelcomeScreen() {
           </View> */}
            <ImageBackground source={logoImg} style={{flex:1}}>
            
-              <View style={tw`flex-1 flex bg-black opacity-80`}>
+              <View style={tw`flex-1 flex bg-black opacity-70`}>
                  
                 <View style={tw`flex items-center my-10 text-center z-40`}>
                 <Image source={tukLogo} style={{width:150,height:150}}/> 
                   <Text style={tw`text-white font-bold text-4xl tracking-wide leading-normal`}>Tuk-Tuk </Text>
-                  <Text style={tw`text-white text-base font-normal tracking-wide`}>(Travel Service in Pyay)</Text>
+                  <Text style={tw`text-white text-base font-normal tracking-wide`}>()</Text>
                   
                   <View style={tw`my-30`}>
                       <Text style={tw`text-white text-base font-thin tracking-wide text-center`}>Always ready to make </Text>
