@@ -1,4 +1,4 @@
-import { View, Text,TouchableOpacity,Image , Alert} from 'react-native'
+import { View, Text,TouchableOpacity,Image , Alert,ScrollView} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
@@ -8,13 +8,13 @@ import { TextInput } from 'react-native';
 import axios from 'axios';
 //import Icon from 'react-native-vector-icons/Iconics';
 
-const tukLogo=require("../assets/images/login.png")
+const tukLogo=require("../assets/images/logo.png")
 
 export default function LoginScreen() {
   const [contact, setContact] = useState([]);
   const getContact = async () => {
     try {
-      const response = await axios.get("http://192.168.1.45:3000/passengers");
+      const response = await axios.get("http://192.168.43.239:3000/passengers");
       // console.log(response.data.data); // Log the fetched data
       setContact(response.data.data);
     } catch (error) {
@@ -72,7 +72,8 @@ export default function LoginScreen() {
 
   return (
    
-    <View style={tw`flex-1 bg-orange-400`}>
+<ScrollView>
+<View style={tw`flex-1 bg-orange-400`}>
     <SafeAreaView style={tw`flex`}>
         <View style={tw`flex-row justify-start`}>
             <TouchableOpacity style={tw`bg-white p-2 rounded-tr-2xl rounded-bl-2xl ml-4 mt-2`} onPress={() => navigation.goBack()}>
@@ -84,29 +85,26 @@ export default function LoginScreen() {
             <Text style={tw`text-white font-bold text-4xl tracking-wide leading-normal`}>Tuk-Tuk </Text>
         </View>
     </SafeAreaView>
-    <View style={tw`flex-1 px-8 pt-8 mt-30 bg-white rounded-t-10`}>
+    <View style={tw`flex-1 px-8 pt-8 mt-20 bg-white rounded-t-10`}>
 
     {
         errorMessage ? <Text style={tw`ml-20   text-red-600`} class>{errorMessage}</Text> : null
       }
-        <View style={tw`form space-y-2`}>
+        <View>
  
-
-
-
-            <Text style={tw`text-gray-700 ml-4 mb-3`}>Phone Number</Text>
+            <Text style={tw`text-gray-700 ml-4 mb-3`}>ဖုန်းနံပါတ်</Text>
 
             <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`} 
-             placeholder="Enter Your Phone number"
+             placeholder="ဖုန်းနံပါတ်ရိုက်ထည့်ပါ"
             onChangeText={(text) => setFdata({...fdata, phnumber:text}) }
 
 
              />
 
-            <Text style={tw`text-gray-700 ml-4 mb-3`}>Password</Text>
+            <Text style={tw`text-gray-700 ml-4 mb-3`}>စကားဝှက်</Text>
             <TextInput style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-10`} 
             secureTextEntry 
-            placeholder="Enter Your Password"
+            placeholder="စကားဝှက်ရိုက်ထည့်ပါ"
             
             onChangeText={(text) => setFdata({...fdata, password:text}) }
 
@@ -118,15 +116,17 @@ export default function LoginScreen() {
             }}
             
             >
-              <Text style={tw`font-xl font-bold text-center text-white text-base`}>Login to Your Account</Text>
+              <Text style={tw`text-xl font-bold text-center text-white text-base`}>အကောင့်ဝင်ပါ</Text>
             </TouchableOpacity>
         </View>
-        <View style={tw`flex-row justify-center mt-5`}>
+        <View style={tw`flex-row justify-center mt-5 mb-20`}>
               
-              <TouchableOpacity style={tw`font-semibold text-orange-400`} onPress={() => navigation.navigate("InputPh")}><Text>Don't have account?Create account</Text></TouchableOpacity>
+              <TouchableOpacity style={tw`font-semibold text-orange-400`} onPress={() => navigation.navigate("InputPh")}><Text>အကောင့်မရှိလျှင် အကောင့်တစ်ခုတည်ဆောက်ရန်</Text></TouchableOpacity>
             </View>
     </View>
   </View>
+
+    </ScrollView>
 
   )
 }

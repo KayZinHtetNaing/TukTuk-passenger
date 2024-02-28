@@ -1,11 +1,11 @@
 import React from 'react'
 import MapComponent from './MapComponent'
 
-const home = () => {
+const Home = () => {
   return (
     <MapComponent/>
     
   )
 }
 
-export default home
+export default Home

@@ -10,7 +10,6 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {NavigatonContainer,DarkTheme,DefaultTheme,useNavigation} from '@react-navigation/native';
-import home from './home';
 import PassengerHome from "./PassengerHome";
 import Profile from './Profile';
 import Setting from './Setting';
@@ -39,6 +38,7 @@ function HomeScreen({route}) {
   const navigation = useNavigation();
 
   const [darkMode,setDarkMode]=useState(false)
+  const theme=useContext(themeContext)
 
   useEffect(()=>{
     const listener=EventRegister.addEventListener('ChangeTheme',(data)=>{
@@ -53,8 +53,8 @@ function HomeScreen({route}) {
 
 
   return ( 
-    <Drawer.Navigator initialRouteName="Home" 
-    screenOptions={{
+    <Drawer.Navigator initialRouteName="Home"
+    screenOptions={[{
       drawerStyle:{
         backgroundColor: "#FFF",
         width: 250,
@@ -67,12 +67,13 @@ function HomeScreen({route}) {
       drawerLabelStyle:{
         color:"#111",
       }
-
-    }}
+    },
+    {backgroundColor:theme.backgroundColor},{color:theme.color}]
+  }
     drawerContent={
       (props)=>{
         return(
-           <SafeAreaView >
+           <SafeAreaView>
             <View style={[{
               height:200,
               width:"100%",
@@ -83,25 +84,16 @@ function HomeScreen({route}) {
               paddingBottom:12
             }]}>
               <Image source={tukLogo} resizeMode="contain" style={{height:100,width:100,borderRadius:70,borderColor:"gray",borderWidth:4}}></Image>
-              <Text style={{fontSize:20,marginVertical:6,fontWeight:"bold",color:"#111"}}>{message.name}</Text>
-              <Text style={{fontSize:16,marginVertical:6,color:"#111"}}>{message.phoneNumber}</Text>
+              <Text style={[{fontSize:20,marginVertical:6,fontWeight:"bold",color:"#111"},{color:theme.color}]}>{message.name}</Text>
+              <Text style={[{fontSize:16,marginVertical:6,color:"#111"},{color:theme.color}]}>{message.phoneNumber}</Text>
             </View>
             <DrawerItemList {...props} />
             <View>
-            <View style={tw`flex-row dark:text-white items-center ml-5`}>
-            <Text style={tw`text-sm p-2`}>Dark Mode</Text>
-            <Switch
-              style={tw`p-2`}
-              value={darkMode} 
-              onValueChange={val =>{
-                setDarkMode(val);
-              }}
-            />
-            </View>
+            
 
             <TouchableOpacity onPress = {() => navigation.navigate('Login')} style={styles.bubble}>
-            <Ionicons name="exit" size={20} color="black" style={{marginLeft:10}}/>
-            <Text style={{paddingRight:10}}>Logout</Text>
+            <Ionicons name="exit" size={20} color="darkorange" style={[{marginLeft:10}]}/>
+            <Text style={[{paddingRight:10},{color:theme.color}]}>Logout</Text>
             </TouchableOpacity>
 
             </View>
@@ -112,12 +104,12 @@ function HomeScreen({route}) {
     >
 
     <Drawer.Screen
-      name="home"
+      name="HomeScreen"
       component={PassengerHome}
-      options={{ drawerLabel: 'Home',
-      title: "Home",
+      options={{ drawerLabel: 'ပင်မစာမျက်နှာ',
+      title: "ပင်မစာမျက်နှာ",
           drawerIcon: () => (
-            <Ionicons name="home" size={20} color="black" />
+            <Ionicons name="home" size={20} color="darkorange"/>
           ),
        }}
     />
@@ -129,30 +121,30 @@ function HomeScreen({route}) {
       component={Profile}
       initialParams={{ message: message }} // Pass the message prop to the Home component
 
-      options={{ drawerLabel: 'Edit Profile',
-      title: "Profile",
+      options={{ drawerLabel: 'ကိုယ်ရေးအချက်အလက်',
+      title: "ကိုယ်ရေးအချက်အလက်",
           drawerIcon: () => (
-            <FontAwesome name="user-circle-o" size={20} color="black" />
+            <FontAwesome name="user-circle-o" size={20} color="darkorange"/>
           ),
       }}
     />
     <Drawer.Screen
       name="Setting"
       component={Setting}
-      options={{ drawerLabel: 'Setting',
-      title: "Setting",
+      options={{ drawerLabel: 'ပြင်ဆင်မှူ',
+      title: "ပြင်ဆင်မှူ",
           drawerIcon: () => (
-            <Ionicons name="settings-outline" size={20} color="black" />
+            <Ionicons name="settings-outline" size={20} color="darkorange"/>
           ),
        }}
     />
     <Drawer.Screen
       name="About"
       component={About}
-      options={{  drawerLabel: "App Guide",
-          title: "App Guide",
+      options={{  drawerLabel: "သုံးစွဲမှူလမ်းညွှန်",
+          title: "သုံးစွဲမှူလမ်းညွှန်",
           drawerIcon: () => (
-            <Ionicons name="compass-outline" size={20} color="black" />
+            <Ionicons name="compass-outline" size={20} color="darkorange"/>
            
           ),
        }}
@@ -160,10 +152,10 @@ function HomeScreen({route}) {
      <Drawer.Screen
       name="Rateus"
       component={Rateus}
-      options={{  drawerLabel: "Feedback",
-          title: "Feedback",
+      options={{  drawerLabel: "အကြုံပြုချက်",
+          title: "အကြုံပြုချက်",
           drawerIcon: () => (
-            <Ionicons name="send-outline" size={20} color="black" />
+            <Ionicons name="send-outline" size={20} color="darkorange"/>
            
           ),
        }}
@@ -171,10 +163,10 @@ function HomeScreen({route}) {
      <Drawer.Screen
       name="Helpcenter"
       component={Helpcenter}
-      options={{  drawerLabel: "Helpcenter",
-          title: "Helpcenter",
+      options={{  drawerLabel: "အကူအညီတောင်းခံမှူ",
+          title: "အကူအညီတောင်းခံမှူ",
           drawerIcon: () => (
-            <AntDesign name="customerservice" size={20} color="black" />
+            <AntDesign name="customerservice" size={20} color="darkorange"/>
            
           ),
        }}
@@ -182,10 +174,10 @@ function HomeScreen({route}) {
      <Drawer.Screen
       name="Privacypolicy"
       component={Privacypolicy}
-      options={{  drawerLabel: "Privacypolicy",
-          title: "Privacypolicy",
+      options={{  drawerLabel: "အသိအမှတ်ပြုထောက်ခံချက်",
+          title: "အသိအမှတ်ပြုထောက်ခံချက်",
           drawerIcon: () => (
-            <MaterialIcons name="local-police" size={20} color="black" />
+            <MaterialIcons name="local-police" size={20} color="darkorange"/>
            
           ),
        }}

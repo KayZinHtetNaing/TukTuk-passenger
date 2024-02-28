@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { StyleSheet, View,Text,TouchableOpacity,Image } from 'react-native';
 import MapView, { Marker,Callout } from 'react-native-maps';
 import tw from 'twrnc';
@@ -11,10 +11,16 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { canOpenURL, openURL } from 'expo-linking';
 import * as Location from 'expo-location';
+import { EventRegister } from 'react-native-event-listeners'
+import themeContext from '../theme/themeContext'
 
 const tukLogo=require("../assets/images/tuk2.png")
 
 const MapComponent = () => {
+
+  const theme=useContext(themeContext)
+
+  const [darkMode,setDarkMode]=useState(false)
   
   const navigation = useNavigation();
 
@@ -146,7 +152,7 @@ const MapComponent = () => {
 
         </MapView>
       ) : (
-        <Text>Waiting for location</Text>
+        <Text style={{color:theme.color}}>Waiting for location</Text>
       )}
     </View>
   );
