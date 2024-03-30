@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { EventRegister } from 'react-native-event-listeners'
 import themeContext from '../theme/themeContext'
 import Onboarding from './Onboarding'
+import aboutguide from './aboutguide'
 export default function AboutScreen() {  
 
     const theme=useContext(themeContext)

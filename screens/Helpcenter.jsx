@@ -61,9 +61,13 @@ export default function HelpcenterScreen() {
 
 
         <View style={tw`flex-row p-5 items-center`}>
-        <MaterialCommunityIcons name="office-building-marker" size={25} color="black" style={{color:theme.color}}/>
-        <Text style={tw`ml-5`} style={{color:theme.color}}>ကွန်ပျူတာတက္ကသိုလ် (ပြည်မြို့)</Text>
-        </View>
+        <MaterialCommunityIcons
+          name="office-building-marker"
+          size={24}
+          color="black" style={{color:theme.color}}
+        />
+        <Text style={[tw`ml-5`,{color:theme.color}]}>ကွန်ပျူတာတက္ကသိုလ် (ပြည်မြို့)</Text>
+      </View>
 
 
         </View>

@@ -5,10 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
 import { TextInput,underlineColorAndroid } from "react-native";
 import Entypo from 'react-native-vector-icons/Entypo';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome ,Ionicons} from '@expo/vector-icons';
 import axios from "axios";
 import { EventRegister } from 'react-native-event-listeners'
 import themeContext from '../theme/themeContext'
+
 //import ImagePicker from 'react-native-image-crop-picker';
 
 const logoImg=require("../assets/p3.png");
@@ -22,10 +23,18 @@ export default function ProfileScreen({route}) {
   const [darkMode,setDarkMode]=useState(false)
 
   const {message} = route.params;
+  console.log(message);
   const phoneNumber= message.phoneNumber;
   const cpassword= message.cpassword;
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const navigation = useNavigation();
 
     
@@ -44,18 +53,24 @@ export default function ProfileScreen({route}) {
   //   },[])
 
 
-    const updateProfile = async(updateData) =>{
-      const {data} = await axios.put(`http://192.168.43.239:3000/passengers/${message._id}`,updateData)
-    }
-    const updateProfileHandler = () =>{
-      
-      const updateData ={name,phoneNumber,password,cpassword};
-      console.log(updateData);
-      updateProfile(updateData);
-      navigation.navigate("Home", { message: updateData }); // Passing the user data to the home screen
-
+  const updateProfile = async (updateData) => {
+    try {
+      const { data } = await axios.put(`http://192.168.43.239:3000/passengers/${message._id}`, updateData);
+      console.log(data); // Handle response data if needed
       Alert.alert("Your Update Successful");
+    } catch (error) {
+      console.error("Update failed:", error);
+      Alert.alert("Update failed. Please try again later.");
     }
+  };
+
+  const updateProfileHandler = () => {
+    const updateData = { name, phoneNumber, password };
+    console.log(updateData);
+    updateProfile(updateData);
+    navigation.navigate("Home", { message: updateData }); // Passing the user data to the home screen
+  };
+
 
   
 
@@ -93,17 +108,22 @@ export default function ProfileScreen({route}) {
                   
                 />
       
-                <Text style={tw`text-gray-700 ml-4 mb-3`}>စကားဝှက်</Text>
-                <TextInput
-                  style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5`}
-                  secureTextEntry
-                  
-                  placeholder="စကားဝှက်အသစ်ထည့်ပါ"
-                  
-                  defaultValue={message.password}
-                  onChangeText={(text) => setPassword(text)}
-                  
-                />
+                 <View>
+      <Text style={tw`text-gray-700 ml-4 mb-3`}>စကားဝှက်</Text>
+      <View style={tw`flex-row items-center`}>
+        <TextInput
+          style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-5 flex-1`}
+          secureTextEntry={!showPassword}
+          placeholder="စကားဝှက်အသစ်ထည့်ပါ"
+          // value={password}
+          defaultValue={message.password}
+          onChangeText={text => setPassword(text)}
+        />
+        <TouchableOpacity onPress={toggleShowPassword} style={tw`p-2`}>
+          <Ionicons name={showPassword ? 'eye-outline' : 'eye-off-outline'} size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+    </View>
       
       
                 <TouchableOpacity
@@ -113,7 +133,7 @@ export default function ProfileScreen({route}) {
                   <Text
                     style={tw`text-xl font-bold text-center text-white text-base`}
                   >
-                    ကိုယ်ရေးအချက်အလက် ပြင်ဆင်မည်
+                    ကိုယ်ရေးအချက်အလက်
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -137,6 +157,8 @@ const styles = StyleSheet.create({
   container: {
   //flex:1,
   //  background:'../assets/images/bg.jpg'
+
+
     
   },
   profileContainer:{
@@ -144,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems:"center",
   },
   imgContainer:{
-    
+    marginTop:50,
   },
   textContainer:{
     alignItems:"center",

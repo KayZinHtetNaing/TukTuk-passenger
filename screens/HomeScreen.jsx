@@ -30,8 +30,9 @@ import {
 import tw from 'twrnc';
 const tukLogo=require("../assets/p3.png")
 
-const Drawer = createDrawerNavigator();
 function HomeScreen({route}) {
+const Drawer = createDrawerNavigator();
+
   const{message} = route.params;
 
   // const theme=useContext(themeContext)
@@ -93,7 +94,7 @@ function HomeScreen({route}) {
 
             <TouchableOpacity onPress = {() => navigation.navigate('Login')} style={styles.bubble}>
             <Ionicons name="exit" size={20} color="darkorange" style={[{marginLeft:10}]}/>
-            <Text style={[{paddingRight:10},{color:theme.color}]}>Logout</Text>
+            <Text style={[{paddingRight:10},{color:theme.color}]}>အကောင့်မှထွက်မည်</Text>
             </TouchableOpacity>
 
             </View>
@@ -106,8 +107,8 @@ function HomeScreen({route}) {
     <Drawer.Screen
       name="HomeScreen"
       component={PassengerHome}
-      options={{ drawerLabel: 'ပင်မစာမျက်နှာ',
-      title: "ပင်မစာမျက်နှာ",
+      options={{ drawerLabel: 'အိုးဝေငှားမည်',
+      title:'အိုးဝေငှားမည်',
           drawerIcon: () => (
             <Ionicons name="home" size={20} color="darkorange"/>
           ),

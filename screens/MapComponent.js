@@ -33,7 +33,7 @@ const MapComponent = () => {
   const [driverLocation, setdriverLocation] = useState([]);
   const getdriverLocation = async () => {
     try {
-      const response = await axios.get("http://192.168.1.45:3000/driverLocation");
+      const response = await axios.get("http://192.168.43.239:3000/driverLocation");
       // console.log(response.data.data); // Log the fetched data
       setdriverLocation(response.data.data);
     } catch (error) {
@@ -63,10 +63,10 @@ const MapComponent = () => {
 
 
   const defaultMarkers = [
-    { latitude: 18.827977877146274, longitude: 95.25783681375435, title:'Default Marker 1' },
-    { latitude: 18.82066629451907,longitude:  95.22127294359886, title: 'Deffault Marker 2' },
-    { latitude: 18.840560083203766, longitude: 95.27074778458567, title: 'Marker 3' },
-    { latitude: 18.78686640422625, longitude: 95.28598927716047, title: 'Marker 4' },
+    // { latitude: 18.827977877146274, longitude: 95.25783681375435, title:'Default Marker 1' },
+    // { latitude: 18.82066629451907,longitude:  95.22127294359886, title: 'Deffault Marker 2' },
+    // { latitude: 18.840560083203766, longitude: 95.27074778458567, title: 'Marker 3' },
+    // { latitude: 18.78686640422625, longitude: 95.28598927716047, title: 'Marker 4' },
    
   ];
 
@@ -99,7 +99,7 @@ const MapComponent = () => {
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
             }}
-            title="Your Location"
+            title="သင့်ရဲ့တည်နေရာ"
           />
 
           
@@ -115,9 +115,12 @@ const MapComponent = () => {
             <Callout  tooltip>
             <View style={{flex:1,padding:5,backgroundColor:"white"}}>
             <Text style={{fontSize:15}}>{marker.title}</Text>
-            <Image source={require("../assets/images/p10.png")} style={{width:150,height:150}}/> 
+            <Image source={require("../assets/images/driver_image/driver1.jpg")} style={{width:150,height:150}}/> 
             <TouchableOpacity onPress={() => openURL("tel:+959459496549")} style={tw`bg-orange-500 mx-5 my-5 w-30 rounded-xl py-3 max-w-sm text-center font-bold `}>
-            <Text style={tw`text-center`}  disabled={canOpenTelephone}>Call out</Text></TouchableOpacity>
+            <Text style={tw`flex-row ml-3 items-center`}  disabled={canOpenTelephone}>
+           <Feather name="phone-call" size={22} color="black" style={{color:theme.color}}/>
+              ဖုန်းခေါ်ပါ
+              </Text></TouchableOpacity>
             </View>
           </Callout>
           </Marker>
@@ -136,15 +139,18 @@ const MapComponent = () => {
               image={tukLogo} 
             >
              <Callout  tooltip>
-            <View style={{flex:1,padding:5,backgroundColor:"white"}}>
+            <View style={{flex:1,padding:5,backgroundColor:"white",alignItems:'center'}}>
             <Image source={
               {uri:driverLocation.profile}
-            } style={{width:150,height:150}}/> 
+            } style={{width:150,height:150,alignItems:'center'}}/> 
             <Text style={{fontSize:15}}>အမည်:{driverLocation.name}</Text>
             <Text style={{fontSize:15}}>လိုင်စင်နံပါတ်:{driverLocation.licenseNo}</Text>
 
             <TouchableOpacity onPress={() => openURL(`tel:${driverLocation.phoneNumber}`)} style={tw`bg-orange-500 mx-5 my-5 w-30 rounded-xl py-3 max-w-sm text-center font-bold `}>
-            <Text style={tw`text-center`}  disabled={canOpenTelephone}>Call out</Text></TouchableOpacity>
+            <Text style={tw`text-center`}  disabled={canOpenTelephone}>
+            <Feather name="phone-call" size={22} color="black"/>
+              ဖုန်းခေါ်ပါ
+              </Text></TouchableOpacity>
             </View>
           </Callout>
             </Marker>
@@ -152,7 +158,7 @@ const MapComponent = () => {
 
         </MapView>
       ) : (
-        <Text style={{color:theme.color}}>Waiting for location</Text>
+        <Text style={{color:theme.color}}>Loading လုပ်နေသည်ခနစောင့်ပါ.......</Text>
       )}
     </View>
   );

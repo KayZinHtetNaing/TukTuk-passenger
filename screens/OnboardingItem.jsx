@@ -21,7 +21,7 @@ export default OnboardingItem = ({ item }) => {
 
       <View style={{ flex: 0.3 }}>
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.description}></Text>
       </View>
     </View>
   );
@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 0.7,
     justifyContent: "center",
+    width:200,
+    height:500,
   },
   title: {
     fontWeight: "800",

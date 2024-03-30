@@ -40,7 +40,7 @@ export default function RateusScreen() {
   const createFeedback = async (feedbacks) => {
     try {
       const response = await axios.post(
-        "http://192.168.43.9:3000/feedback",
+        "http://192.168.43.239:3000/feedback",
         feedbacks
       );
       console.log("Feedback response:", response.data);
@@ -86,7 +86,7 @@ export default function RateusScreen() {
         searchengine: false,
         other: false,
       });
-      Alert.alert("Thanks for your feedback");
+      Alert.alert("အကြံပြုမှုအတွက်ကျေးဇူးတင်ပါသည်။");
     }
   };
 

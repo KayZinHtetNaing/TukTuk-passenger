@@ -55,7 +55,7 @@ export default function LoginScreen() {
         found = true;
         // Assuming you want to retrieve user-specific data and navigate to the home screen on successful login
         // console.log("Login Successful"); 
-        Alert.alert("Login Successful");
+        Alert.alert("လူကြီးမင်း၏ အကောင့်ဝင်ရောက်မှုအောင်မြင်ပါသည် Appကိုအသုံးပြုခြင်းကြောင့်ကျေးဇူးတင်ပါသည်။");
         navigation.navigate("Home", { message: contact }); // Passing the user data to the home screen
       }
     });
@@ -64,8 +64,6 @@ export default function LoginScreen() {
       setErrorMessage("Invalid phone number or password");
     }
   };
-  
-  
   
   
 

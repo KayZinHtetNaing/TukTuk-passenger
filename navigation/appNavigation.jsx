@@ -14,7 +14,7 @@ import { EventRegister } from 'react-native-event-listeners';
 import { useState,useEffect } from 'react';
 import theme from '../theme/theme';
 import themeContext from '../theme/themeContext';
-
+import Guide from '../screens/Guide';
 const Stack = createNativeStackNavigator();
 
 
@@ -43,7 +43,12 @@ export default function AppNavigation() {
           <Stack.Screen name = "Login" options = { { headerShown: false }} component = { LoginScreen }/> 
         <Stack.Screen name = "SignUp" options = {{ headerShown: false }} component = { SignUpScreen }/> 
         <Stack.Screen name = "InputPh" options = {{ headerShown: false }} component = { InputPhScreen }/> 
-        <Stack.Screen name = "OtpNoScreen" options = {{ headerShown: false }} component = { OtpNoScreen }/> 
+        <Stack.Screen name = "OtpNoScreen" options = {{ headerShown: false }} component = { OtpNoScreen }/>
+        <Stack.Screen
+          name="Guide"
+          options={{ headerShown: false }}
+          component={Guide}
+        /> 
           </Stack.Navigator> 
           </NavigationContainer>
           </themeContext.Provider>

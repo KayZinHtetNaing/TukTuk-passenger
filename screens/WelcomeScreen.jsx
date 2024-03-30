@@ -66,7 +66,6 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import tw from 'twrnc';
-
 const logoImg=require("../assets/images/bg1.jpg")
 const tukLogo=require("../assets/images/logo.png")
 
@@ -92,6 +91,11 @@ export default function WelcomeScreen() {
                   <View style={tw`my-30`}>
                   <Text style={tw`text-white text-base font-thin tracking-wide text-center`}> သင့်ရဲ့ခရီးလွယ်ကူစေရန်</Text>
                       <Text style={tw`text-white text-base font-thin tracking-wide text-center`}>သင့်အတွက် အမြဲ အသင့်ရှိသည်</Text>
+                      <View>
+            <TouchableOpacity onPress={() => navigation.navigate('Guide')} sty>
+            <Text style={[tw`text-lg ml-1 text-blue-500 underline text-center mt-4`]}>အကောင့်ဖွင့်/၀င်နည်းကြည့်မည်</Text>
+            </TouchableOpacity>
+          </View>
                   </View>
 
                   <View>

@@ -50,8 +50,10 @@ const createAccount = async(contact) => {
     const contact ={name, phoneNumber,password,cpassword};
      
       navigation.navigate("Home",{message:contact});
-
+      Alert.alert("လူကြီးမင်း၏ အကောင့်ဝင်ရောက်မှုအောင်မြင်ပါသည် Appကိုအသုံးပြုခြင်းကြောင့်ကျေးဇူးတင်ပါသည်။");
       createAccount(contact);
+  
+
 
     }
   }
@@ -113,12 +115,12 @@ const createAccount = async(contact) => {
             // onChangeText={(text) => setFdata({...fdata , password: text})}
           />
 
-          <Text style={tw`text-gray-700 ml-4 mb-3`}>စကားဝှက်</Text>
+          <Text style={tw`text-gray-700 ml-4 mb-3`}>အတည်ပြု စကားဝှက်</Text>
           <TextInput
             style={tw`p-4 bg-gray-100 text-gray-700 rounded-2xl mb-10`}
             secureTextEntry
             
-            placeholder="စကားဝှက်ကိုထပ်၍ရိုက်ထည့်ပါ"
+            placeholder="စကားဝှက်ကိုပြန်လည်အတည်ပြုပါ"
             onChangeText={(text) => setcPassword(text)}
             value={cpassword}
             // onChangeText = {(text) => setFdata({...fdata, cpassword: text})}
